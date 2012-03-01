@@ -7,11 +7,14 @@
 
 {% block style %}
 	<style>
+		#stats {
+			margin-bottom: 30px;
+		}
 		#stats .progress_bar {
 			float: left;
-			width: 38px;
+			width: 35px;
 			height: 200px;
-			border: 5px solid #ccc;
+			border: 4px solid #bbb;
 			border-radius: 35px;
 			padding: 3px;
 			background: white;
@@ -25,10 +28,26 @@
 		}
 		#stats .raised {
 			float: left;
-			margin-left: 50px;
+			margin-left: 25px;
+			width: 330px;
 		}
 		#stats .total {
 			margin-bottom: 15px;
+		}
+		#stats .support,
+		#stats .donate {
+			float: left;
+			width: 45%;
+		}
+		#stats .donate {
+			margin-top: 45px;
+		}
+		#stats .donate .btn {
+			margin-left: 8px;
+			font-size: 18px;
+		}
+		#stats .donate .help-block {
+			text-align: center;
 		}
 		#stats h2 {
 			font-size: 3em;
@@ -42,9 +61,39 @@
 			font-size: 1.2em;
 			text-transform: uppercase;
 		}
-		#stats a.btn {
+		#stats .donate {
+			float: right;
+		}
+
+		blockquote { 
 			position: relative;
-			top: 170px;
+		    color: #666;
+		    font-size: 1.2em;
+		    padding: 15px 5px 15px 30px;
+		    font-style: italic;
+		    margin: 25px 0;
+		}
+		blockquote:before, blockquote:after { 
+		    position: absolute;
+		    font-size: 300%; 
+		    color: #ccc; 
+		    font-family: Futura;
+		}
+		blockquote:before { 
+		    content: open-quote;
+		    left: 7px;
+			top: 5px;
+		}
+		blockquote:after { 
+		    content: close-quote; 
+		    right: 15px;
+			bottom: -15px; 
+		}
+
+		.donation .total {
+			padding-top: 5px;
+			font-size: 1.8em;
+			text-align: center;
 		}
 	</style>
 {% end %}
@@ -56,7 +105,7 @@
 			Stewart Lew
 			<small>Cyclist</small>
 		</h1>
-	</div>	
+	</div>
 
 	<div id="stats" class="well">
 		<div class="progress_bar">
@@ -67,22 +116,59 @@
 				<h2>$2,650</h2>
 				<strong>raised of $5,000 goal</strong>
 			</div>
-			<h3>23</h3>
-			<strong>backers</strong>
-			<br>
-			<br>
-			<h3>19</h3>
-			<strong>days left</strong>
+			<div style="clear:both"></div>
+			<div class="support">
+				<h3>23</h3>
+				<strong>donations</strong>
+				<br>
+				<br>
+				<h3>19</h3>
+				<strong>days left</strong>
+			</div>
+			<div class="donate">
+				<a class="btn btn-large btn-success">
+					Donate Now
+				</a>
+				<p class="help-block">Proceeds go to the BC Children’s Heart Unit</p>
+			</div>	
 		</div>
-		<a class="btn btn-large btn-success">
-			Donate Now
-		</a>
 		<div style="clear:both"></div>
 	</div>
 
+		<blockquote>
+		I'm participating because I believe that change is possible. That and I really like bikes...
+	</blockquote>
+
 	<div class="page-header">
 		<h2>Donations</h2>
+	</div>
 
+	<div class="row-fluid donation">
+		<div class="span2 total">$45</div>
+		<div class="span4">
+			<h3>Marie Campbell</h3>
+			<p>
+				Good job Stewart!
+			</p>
+		</div>
+	</div>
+	<div class="row-fluid donation">
+		<div class="span2 total">$45</div>
+		<div class="span4">
+			<h3>Dominik Szopa</h3>
+			<p>
+				Good job Stewart!
+			</p>
+		</div>
+	</div>
+	<div class="row-fluid donation">
+		<div class="span2 total">$45</div>
+		<div class="span4">
+			<h3>Sherman Yee</h3>
+			<p>
+				Good job Stewart!
+			</p>
+		</div>
 	</div>
 {% end %}
 
