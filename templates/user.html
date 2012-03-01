@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}
+	<title>Stewart Lew - Triple Crown For Heart</title>
+{% end %}
+
+
+{% block style %}
+	<style>
+		#stats .progress_bar {
+			float: left;
+			width: 38px;
+			height: 200px;
+			border: 5px solid #ccc;
+			border-radius: 35px;
+			padding: 3px;
+			background: white;
+		}
+		#stats .progress_bar .bar {
+			position: relative;
+			height: 60%;
+			top: 40%;
+			background: #5BC0DE;
+			border-radius: 28px;
+		}
+		#stats .raised {
+			float: left;
+			margin-left: 50px;
+		}
+		#stats .total {
+			margin-bottom: 15px;
+		}
+		#stats h2 {
+			font-size: 3em;
+			margin-bottom: 10px;
+		}
+		#stats h3 {
+			font-size: 2.4em;
+			margin-bottom: 5px;
+		}
+		#stats strong {
+			font-size: 1.2em;
+			text-transform: uppercase;
+		}
+		#stats a.btn {
+			position: relative;
+			top: 170px;
+		}
+	</style>
+{% end %}
+
+
+{% block content %}
+	<div class="page-header">
+		<h1>
+			Stewart Lew
+			<small>Cyclist</small>
+		</h1>
+	</div>	
+
+	<div id="stats" class="well">
+		<div class="progress_bar">
+			<div class="bar"></div>
+		</div>
+		<div class="raised">
+			<div class="total">
+				<h2>$2,650</h2>
+				<strong>raised of $5,000 goal</strong>
+			</div>
+			<h3>23</h3>
+			<strong>backers</strong>
+			<br>
+			<br>
+			<h3>19</h3>
+			<strong>days left</strong>
+		</div>
+		<a class="btn btn-large btn-success">
+			Donate Now
+		</a>
+		<div style="clear:both"></div>
+	</div>
+
+	<div class="page-header">
+		<h2>Donations</h2>
+
+	</div>
+{% end %}
+
+

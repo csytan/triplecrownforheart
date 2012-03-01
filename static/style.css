@@ -1,0 +1,139 @@
+/* http://yui.yahooapis.com/3.0.0/build/cssreset/reset-min.css */
+html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}
+
+html {
+    color: #333;
+}
+
+body {
+    font-family: Georgia, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5em;
+    margin: auto;
+}
+
+a { color: #2081A2; text-decoration: none; }
+a:hover { color: #e0115f; }
+
+b, strong { font-weight: bold; }
+em { font-style: italic; }
+p, blockquote { margin-bottom: 1.4em; }
+
+h1, h2, h3, h4, h5 {
+    font-weight: 200;
+    line-height: 1.4em;
+    margin: 0.5em 0 1em;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a {
+    text-decoration: none;
+}
+
+h1 { font-size: 1.6em; }
+h2 { font-size: 1.3em; }
+h3 { font-size: 1.1em;  }
+
+ol, ul {
+    margin: 0.5em 1em;
+    padding-left: 0.5em;
+    display: block;
+}
+ol li { list-style-type: decimal; }
+ul li { list-style-type: disc; }
+
+
+
+#header,
+#content,
+#footer .container {
+    width: 650px;
+    margin: auto;
+}
+
+#header {
+    font-family: 'Yanone Kaffeesatz', arial, serif;
+    font-size: 2.3em;
+    padding: 2em 0 1em;
+    color: #444;
+    width: 700px;
+}
+#header strong {
+    color: #333;
+    font-size: 1.5em;
+    margin-right: 0.1em;
+}
+h1, h2, h3 {
+    font-family: 'Yanone Kaffeesatz', arial, serif;
+    margin-left: -5px;
+}
+
+
+img {
+    padding: 4px;
+    border: 1px solid #ccc;
+}
+
+h2 {
+    font-size: 2em;
+    margin: 0;
+    margin-left: -7px;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+h3 {
+    color: #444;
+    font-size: 1.4em;
+    margin: 0;
+    text-align: center;
+}
+
+#content {
+    padding-bottom: 3em;
+}
+
+#about img {
+    float: left;
+    margin-right: 1.4em;
+    margin-bottom: 1.4em;
+}
+
+#skills td {
+    padding: 0.8em 1em;
+}
+#skills a {
+    color: white;
+    background: #67B4CD;
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    margin-right: 0.4em;
+}
+#skills a:hover {
+    background: #3C9CBC;
+}
+
+
+#footer {
+    color: white;
+    background: black;
+    padding: 2em 0;
+}
+#footer .donate {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.project {
+    margin-bottom: 3.5em;
+}
+.project img {
+    -webkit-transition-property: opacity;
+    -webkit-transition-duration: 0.1s;
+}
+.project img:hover {
+    -webkit-transform: scale(1.01);
+    -moz-transform: scale(1.01);
+    transform: scale(1.01);
+    opacity: 0.9;
+    -webkit-transition-property: opacity;
+    -webkit-transition-duration: 0.15s;
+}
+
