@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    <title>Triple Crown For Heart - Manage</title>
+{% end %}
+
+
+{% block content %}
+    <div class="page-header">
+        <h1>Triple Crown For Heart <small>New User</small></h1>
+    </div>
+
+    <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label">Name</label>
+            <div class="controls">
+                <input type="text" name="name" placeholder="John Doe">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Goal</label>
+            <div class="controls">
+                <input type="text" name="goal" placeholder="60">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Quote (optional)</label>
+            <div class="controls">
+                <input type="text" name="quote" placeholder="">
+            </div>
+        </div>
+        <div class="form-actions">
+            <input type="submit" class="btn btn-success" value="Add User">
+        </div>
+    </form>
+{% end %}
+

@@ -8,70 +8,17 @@
 
 {% block content %}
     <div class="page-header">
-        <h1>Triple Crown For Heart <small>Registration</small></h1>
+        <h1>Triple Crown For Heart - Donations</h1>
     </div>
 
-    <ul class="breadcrumb">
-        <li>
-            <a class="active" href="#">1. Cyclist Information</a> <span class="divider">/</span>
-        </li>
-        <li>
-            2. Payment <span class="divider">/</span>
-        </li>
-        <li>
-            3. Confirmation
-        </li>
-    </ul>
-
-    <form class="form-horizontal">
-        <div class="control-group">
-            <label class="control-label">First Name</label>
-            <div class="controls">
-                <input type="text" name="first_name" placeholder="John">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Last Name</label>
-            <div class="controls">
-                <input type="text" name="first_name" placeholder="Doe">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Gender</label>
-            <div class="controls">
-                <label class="radio">
-                    <input type="radio" name="gender" value="male" checked> Male
-                </label>
-                <label class="radio">
-                    <input type="radio" name="gender" value="female"> Female
-                </label>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">T-shirt Size</label>
-            <div class="controls">
-                <label class="radio">
-                    <input type="radio" name="tshirt_size" value="male"> Small
-                </label>
-                <label class="radio">
-                    <input type="radio" name="tshirt_size" value="female" checked> Medium
-                </label>
-                <label class="radio">
-                    <input type="radio" name="tshirt_size" value="female"> Large
-                </label>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Total</label>
-            <div class="controls">
-                $60
-            </div>
-        </div>
-
-        <div class="form-actions">
-            <input type="submit" class="btn btn-success" value="Continue To Payment">
-        </div>
-    </form>
+    <ol id="users">
+        {% for user in users %}
+            <li class="user">
+                <span class="raised">${{ user.raised / 100 }}</span>
+                {{ user.name }}
+            </li>
+        {% end %}
+    </ol>
 {% end %}
 
 
