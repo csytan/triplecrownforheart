@@ -46,6 +46,7 @@ class EditUser(BaseHandler):
         user.goal = int(self.get_argument('goal', 20)) * 100
         user.quote = self.get_argument('quote', '')
         user.put()
+        self.redirect('/' + str(user.key.id()) + '/' + user.slug)
 
 
 class PayPalIPN(BaseHandler):

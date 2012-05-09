@@ -15,7 +15,7 @@
         {% for user in users %}
             <li class="user">
                 <span class="raised">${{ user.raised / 100 }}</span>
-                {{ user.name }}
+                <a href="/{{ user.key.id() }}/{{ user.slug }}">{{ user.name }}</a>
             </li>
         {% end %}
     </ol>
