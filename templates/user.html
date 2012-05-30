@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-	<title>Stewart Lew - Triple Crown For Heart</title>
+	<title>{{ user.name }} - Triple Crown For Heart</title>
 {% end %}
 
 
@@ -48,6 +48,11 @@
 		}
 		#stats .donate .help-block {
 			text-align: center;
+			color: #777;
+		}
+		#stats .donate .help-block a {
+			color: #666;
+			font-weight: bold;
 		}
 		#stats h2 {
 			font-size: 3em;
@@ -104,6 +109,9 @@
 
 {% block content %}
 	<div class="page-header">
+		{% if admin %}
+			<a href="/{{ user.key.id() }}/{{ user.slug }}/edit" class="btn btn-info pull-right">Edit Profile</a>
+		{% end %}
 		<h1>
 			{{ user.name }}
 			<small>Cyclist</small>
@@ -116,8 +124,8 @@
 		</div>
 		<div class="raised">
 			<div class="total">
-				<h2>$2,650</h2>
-				<strong>raised of $5,000 goal</strong>
+				<h2>{{ format_dollars(user.raised) }}</h2>
+				<strong>raised of {{ format_dollars(user.goal) }} goal</strong>
 			</div>
 			<div style="clear:both"></div>
 			<div class="support">
@@ -132,7 +140,12 @@
 				<a class="btn btn-large btn-success">
 					Donate Now
 				</a>
-				<p class="help-block">Proceeds go to the BC Children’s Heart Unit</p>
+				<p class="help-block">
+					Proceeds go to the<br>
+					<a href="http://www.bcchildrens.ca/Services/ChildrensHeartCentre/default.htm" target="_blank">
+						BC Children’s Heart Unit
+					</a>
+				</p>
 			</div>	
 		</div>
 		<div style="clear:both"></div>

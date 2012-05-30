@@ -1,6 +1,6 @@
 import os
 
-from google.appengine.ext.webapp.util import run_wsgi_app
+from google.appengine.api import users
 
 import tornado.wsgi
 import tornado.web
@@ -12,11 +12,6 @@ class BaseHandler(tornado.web.RequestHandler):
     def head(self, *args, **kwargs):
         self.get(*args, **kwargs)
         self.request.body = ''
-        
-    def get_current_user(self):
-        user_id = self.get_secure_cookie('user_id')
-        if user_id:
-            return models.User.get_by_id(int(user_id))
 
 
 class Index(BaseHandler):
@@ -24,9 +19,20 @@ class Index(BaseHandler):
         self.render('index.html', users=models.User.users_by_raised())
 
 
+class Admin(BaseHandler):
+    def get(self):
+        self.render('admin.html', users=models.User.users_by_name())
+
+
 class User(BaseHandler):
     def get(self, id=None):
-        self.render('user.html', user=models.User.get_by_id(int(id)))
+        self.render('user.html', user=models.User.get_by_id(int(id)),
+            format_dollars=self.format_dollars,
+            admin=users.is_current_user_admin())
+
+    @staticmethod
+    def format_dollars(amount):
+        return '${:,d}'.format(amount)
 
 
 class EditUser(BaseHandler):
@@ -43,7 +49,7 @@ class EditUser(BaseHandler):
         else:
             user = models.User()
         user.name = self.get_argument('name')
-        user.goal = int(self.get_argument('goal', 20)) * 100
+        user.goal = int(self.get_argument('goal', 20))
         user.quote = self.get_argument('quote', '')
         user.put()
         self.redirect('/' + str(user.key.id()) + '/' + user.slug)
@@ -99,17 +105,12 @@ settings = {
     'debug': os.environ['SERVER_SOFTWARE'].startswith('Dev'),
     'cookie_secret': 'hello'
 }
-application = tornado.wsgi.WSGIApplication([
+app = tornado.wsgi.WSGIApplication([
     (r'/', Index),
+    (r'/admin', Admin),
     (r'/new_user', EditUser),
     (r'/(\d+)/.+/edit', EditUser),
     (r'/(\d+)/.+', User)
 ], **settings)
 
 
-def main():
-    run_wsgi_app(application)
-
-
-if __name__ == "__main__":
-    main()

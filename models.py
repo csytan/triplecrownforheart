@@ -12,6 +12,10 @@ class User(ndb.Model):
     def users_by_raised(cls):
     	return cls.query().order(-cls.raised).fetch(1000)
 
+    @classmethod
+    def users_by_name(cls):
+        return cls.query().order(cls.name).fetch(1000)
+
     @property
     def slug(self):
     	return ''.join(s for s in self.name if s.isalnum()).lower()

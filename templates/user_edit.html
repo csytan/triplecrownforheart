@@ -8,30 +8,43 @@
 
 {% block content %}
     <div class="page-header">
-        <h1>Triple Crown For Heart <small>New User</small></h1>
+        <h1>
+            {% if user %}
+                {{ user.name }}
+                <small>Edit User</small>
+            {% else %}
+                Triple Crown For Heart
+                <small>New User</small>
+            {% end %}
+        </h1>
     </div>
     
     <form class="form-horizontal" method="post" action="">
+        {% raw xsrf_form_html() %}
+        <input type="hidden" name="action" value="edit">
         <div class="control-group">
             <label class="control-label">Name</label>
             <div class="controls">
-                <input type="text" name="name" placeholder="John Doe">
+                <input type="text" name="name" placeholder="John Doe" value="{{ user.name if user else '' }}">
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label">Goal</label>
+            <label class="control-label">Goal ($)</label>
             <div class="controls">
-                <input type="text" name="goal" placeholder="60">
+                <input type="text" name="goal" placeholder="50" value="{{ user.goal if user else '' }}">
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Quote (optional)</label>
             <div class="controls">
-                <input type="text" name="quote" placeholder="">
+                <input type="text" name="quote" placeholder="" value="{{ user.quote if user else '' }}">
             </div>
         </div>
         <div class="form-actions">
             <input type="submit" class="btn btn-success" value="Add User">
+            {% if user %}
+                <input type="submit" class="btn btn-warning" value="Remove User">
+            {% end %}
         </div>
     </form>
 {% end %}
