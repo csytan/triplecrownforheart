@@ -12,19 +12,21 @@
 		}
 		#stats .progress_bar {
 			float: left;
+			position: relative;
 			width: 35px;
 			height: 200px;
 			border: 4px solid #bbb;
-			border-radius: 35px;
+			border-radius: 10px;
 			padding: 3px;
 			background: white;
 		}
 		#stats .progress_bar .bar {
-			position: relative;
-			height: 60%;
-			top: 40%;
+			position: absolute;
+			height: 0;
+			bottom: 4px;
+			width: 35px;
 			background: #5BC0DE;
-			border-radius: 28px;
+			border-radius: 4px;
 		}
 		#stats .raised {
 			float: left;
@@ -34,20 +36,23 @@
 		#stats .total {
 			margin-bottom: 15px;
 		}
-		#stats .support,
-		#stats .donate {
+		#stats .support {
 			float: left;
 			width: 45%;
 		}
 		#stats .donate {
+			float: left;
+			width: 170px;
 			margin-top: 45px;
 		}
 		#stats .donate .btn {
 			margin-left: 8px;
+			margin-bottom: 5px;
 			font-size: 18px;
 		}
 		#stats .donate .help-block {
 			text-align: center;
+			font-size: 14px;
 			color: #777;
 		}
 		#stats .donate .help-block a {
@@ -107,6 +112,17 @@
 {% end %}
 
 
+{% block script %}
+	<script>
+		jQuery(function($){
+			var raised = {{ user.raised }} / {{ user.goal }};
+			var height = (raised * 198) + 'px';
+			$('#stats .progress_bar .bar').animate({height: height}, 1000);
+		});
+	</script>
+{% end %}
+
+
 {% block content %}
 	<div class="page-header">
 		{% if admin %}
@@ -129,15 +145,16 @@
 			</div>
 			<div style="clear:both"></div>
 			<div class="support">
-				<h3>23</h3>
+				<h3>{{ user.n_donations }}</h3>
 				<strong>donations</strong>
 				<br>
 				<br>
-				<h3>19</h3>
+				<h3>{{ days_left }}</h3>
 				<strong>days left</strong>
 			</div>
 			<div class="donate">
 				<a class="btn btn-large btn-success">
+					<i class="icon-heart"></i>
 					Donate Now
 				</a>
 				<p class="help-block">

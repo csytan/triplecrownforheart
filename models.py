@@ -6,6 +6,7 @@ class User(ndb.Model):
     name = ndb.StringProperty()
     raised = ndb.IntegerProperty(default=0)
     goal = ndb.IntegerProperty(default=20)
+    n_donations = ndb.IntegerProperty(default=0)
     quote = ndb.TextProperty()
 
     @classmethod

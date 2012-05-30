@@ -1,6 +1,8 @@
+import datetime
 import os
 
 from google.appengine.api import users
+from google.appengine.ext import ndb
 
 import tornado.wsgi
 import tornado.web
@@ -26,8 +28,10 @@ class Admin(BaseHandler):
 
 class User(BaseHandler):
     def get(self, id=None):
+        end_date = datetime.date(year=2012, month=7, day=28)
         self.render('user.html', user=models.User.get_by_id(int(id)),
             format_dollars=self.format_dollars,
+            days_left=(end_date - datetime.date.today()).days,
             admin=users.is_current_user_admin())
 
     @staticmethod
@@ -112,5 +116,7 @@ app = tornado.wsgi.WSGIApplication([
     (r'/(\d+)/.+/edit', EditUser),
     (r'/(\d+)/.+', User)
 ], **settings)
+
+app = ndb.toplevel(app)
 
 
