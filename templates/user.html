@@ -108,6 +108,13 @@
 			font-size: 1.5em;
 			text-align: center;
 		}
+
+
+		#donate {
+			width: 400px;
+			margin-left: -195px;
+		}
+
 	</style>
 {% end %}
 
@@ -153,7 +160,7 @@
 				<strong>days left</strong>
 			</div>
 			<div class="donate">
-				<a class="btn btn-large btn-success">
+				<a class="btn btn-large btn-success" data-toggle="modal" href="#donate">
 					<i class="icon-heart"></i>
 					Donate Now
 				</a>
@@ -168,16 +175,16 @@
 		<div style="clear:both"></div>
 	</div>
 
-    <form id="donate" class="modal hide form-horizontal" action="https://www.paypal.com/cgi-bin/webscr" method="post">
-        <input type="hidden" name="return" value="http://www.caterpi.com/orders?message=payment">
-        <input type="hidden" name="notify_url" value="http://www.caterpi.com/paypal_ipn">
+    <form id="donate" class="modal hide" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+        <input type="hidden" name="return" value="http://donate.triplecrownforheart.ca/thank_you">
+        <input type="hidden" name="notify_url" value="http://donate.triplecrownforheart.ca/paypal_ipn">
         <input type="hidden" name="cmd" value="_xclick">
-        <input type="hidden" name="business" value="account@caterpi.com">
+        <input type="hidden" name="business" value="triplecrownforheart@gmail.com">
         <input type="hidden" name="lc" value="CA">
         <input type="hidden" name="item_name" value="Donation">
         <input type="hidden" name="item_number" value="{{ user.key.id() }}">
         <input type="hidden" name="amount" value="">
-        <input type="hidden" name="currency_code" value="USD">
+        <input type="hidden" name="currency_code" value="CAD">
         <input type="hidden" name="button_subtype" value="services">
         <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHostedGuest">
         <div class="modal-header">
@@ -185,21 +192,51 @@
             <h3>Donate to the BC Children’s Heart Unit</h3>
         </div>
         <div class="modal-body">
+        	<div class="alert alert-info">
+        		A tax deductable receipt for donations above $20 will be sent to your billing address 
+        		in the mail.
+        	</div>
             <div class="control-group">
-                <label class="control-label" for="email">Email</label>
+                <label class="control-label">Your Name</label>
                 <div class="controls">
-                    <input name="email" value="" type="email">
+                    <input name="email" placeholder="John Doe" type="text">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Donation Amount (in dollars)</label>
+                <div class="controls">
+                    <input name="amount" placeholder="50" type="text">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Comment</label>
+                <div class="controls">
+                    <textarea name="comment" class="span4" rows="4"></textarea>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-        	<input type="submit" class="btn btn-success" value="Continue to Checkout">
+        	<a class="btn btn-success btn-large">
+        		Continue to PayPal
+        		<i class="icon-arrow-right"></i>
+        	</a>
         </div>
     </form>
 
 	{% if user.quote %}
 		<blockquote>{{ user.quote }}</blockquote>
 	{% end %}
+
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=237956989555822";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+	<div class="fb-like" data-send="false" data-width="350" data-show-faces="true"></div>
+
 
 	<div class="page-header">
 		<h2>Donations</h2>

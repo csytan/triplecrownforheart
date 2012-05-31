@@ -2,7 +2,43 @@
 
 
 {% block title %}
-    <title>Triple Crown For Heart - Registration</title>
+    <title>Triple Crown For Heart - Rankings</title>
+{% end %}
+
+
+{% block style %}
+    <style>
+        #content {
+            width: 500px;
+        }
+
+        #logo {
+            padding-bottom: 25px;
+            border-bottom: 4px solid #ddd;
+        }
+
+        #users {
+            margin-top: 10px;
+            font-size: 18px;
+            border-bottom: 4px solid #ddd;
+        }
+        #users td, #users th {
+            padding: 10px;
+            text-align: left;
+        }
+        #users td.user {
+            width: 85%;
+        }
+        #users td.user a {
+            font-weight: bold;
+        }
+        #users .quote {
+            color: #888;
+            font-style: italic;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+    </style>
 {% end %}
 
 
@@ -13,14 +49,31 @@
         </h1>
     </div>
 
-    <ol id="users">
-        {% for user in users %}
-            <li class="user">
-                <span class="raised">${{ user.raised / 100 }}</span>
-                <a href="/{{ user.key.id() }}/{{ user.slug }}">{{ user.name }}</a>
-            </li>
-        {% end %}
-    </ol>
+    <img id="logo" src="/static/logo.png">
+
+    <table id="users">
+        <thead>
+            <tr>
+                <th>Participant</th>
+                <th>Raised</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i, user in enumerate(users) %}
+                <tr>
+                    <td class="user">
+                        <a href="/{{ user.key.id() }}/{{ user.slug }}">
+                            {{ i + 1 }}. {{ user.name }}
+                        </a>
+                        <span class="quote">
+                            "{{ user.quote }}"
+                        </span>
+                    </td>
+                    <td class="raised">${{ user.raised }}</td>
+                </li>
+            {% end %}
+        </tbody>
+    </table>
 {% end %}
 
 
