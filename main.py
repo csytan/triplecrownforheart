@@ -28,8 +28,12 @@ class Admin(BaseHandler):
 
 class User(BaseHandler):
     def get(self, id=None):
+        user = models.User.get_by_id(int(id))
+        if not user:
+            raise tornado.web.HTTPError(404)
         end_date = datetime.date(year=2012, month=7, day=28)
-        self.render('user.html', user=models.User.get_by_id(int(id)),
+        self.render('user.html', user=user,
+            donations=user.donations(),
             format_dollars=self.format_dollars,
             days_left=(end_date - datetime.date.today()).days,
             admin=users.is_current_user_admin())
@@ -81,11 +85,12 @@ class PayPalIPN(BaseHandler):
         self.write('1')
         
     def web_accept(self, data):
-        assert data['mc_currency'] == 'USD'
-        assert data['receiver_email'] == 'account@caterpi.com'
-        payment = models.Payment(
+        if data['mc_currency'] != 'CAD' or \
+            data['receiver_email'] != 'triplecrownforheart@gmail.com':
+            return
+
+        donation = models.Donation(
             key_name=data['txn_id'],
-            txn_type=data['txn_type'],
             payer_email=data['payer_email'],
             gross=int(float(data['mc_gross']) * 100),
             fee=int(float(data.get('mc_fee', 0)) * 100),

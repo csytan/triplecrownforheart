@@ -79,7 +79,7 @@
 			position: relative;
 		    color: #666;
 		    font-size: 1.25em;
-		    padding: 30px 5px 30px 30px;
+		    padding: 25px 5px 25px 30px;
 		    font-style: italic;
 		    margin: 25px 0;
 		}
@@ -124,7 +124,9 @@
 		jQuery(function($){
 			var raised = {{ user.raised }} / {{ user.goal }};
 			var height = (raised * 198) + 'px';
-			$('#stats .progress_bar .bar').animate({height: height}, 1000);
+			$('#stats .progress_bar .bar')
+				.delay(400)
+				.animate({height: height}, 1000);
 		});
 	</script>
 {% end %}
@@ -178,12 +180,11 @@
     <form id="donate" class="modal hide" action="https://www.paypal.com/cgi-bin/webscr" method="post">
         <input type="hidden" name="return" value="http://donate.triplecrownforheart.ca/thank_you">
         <input type="hidden" name="notify_url" value="http://donate.triplecrownforheart.ca/paypal_ipn">
-        <input type="hidden" name="cmd" value="_xclick">
+        <input type="hidden" name="cmd" value="_donations">
         <input type="hidden" name="business" value="triplecrownforheart@gmail.com">
         <input type="hidden" name="lc" value="CA">
-        <input type="hidden" name="item_name" value="Donation">
+        <input type="hidden" name="item_name" value="Donation to BC Children's Hospital">
         <input type="hidden" name="item_number" value="{{ user.key.id() }}">
-        <input type="hidden" name="amount" value="">
         <input type="hidden" name="currency_code" value="CAD">
         <input type="hidden" name="button_subtype" value="services">
         <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHostedGuest">
@@ -211,7 +212,7 @@
             <div class="control-group">
                 <label class="control-label">Comment</label>
                 <div class="controls">
-                    <textarea name="comment" class="span4" rows="4"></textarea>
+                    <textarea name="custom" class="span4" rows="4"></textarea>
                 </div>
             </div>
         </div>
@@ -242,33 +243,21 @@
 		<h2>Donations</h2>
 	</div>
 
-	<div class="row-fluid donation">
-		<div class="span2 total">$45</div>
-		<div class="span4">
-			<h3>Marie Campbell</h3>
-			<p>
-				Good job Stewart!
-			</p>
+	{% if not donations %}
+		<div class="row-fluid donation">
+			None yet. Be the first!
 		</div>
-	</div>
-	<div class="row-fluid donation">
-		<div class="span2 total">$45</div>
-		<div class="span4">
-			<h3>Dominik Szopa</h3>
-			<p>
-				Good job Stewart!
-			</p>
+	{% end %}
+	
+	{% for donation in donations %}
+		<div class="row-fluid donation">
+			<div class="span2 total">${{ donation.amount }}</div>
+			<div class="span4">
+				<h3>{{ donation.donor_name }}</h3>
+				<p>{{ donation.donor_comment }}</p>
+			</div>
 		</div>
-	</div>
-	<div class="row-fluid donation">
-		<div class="span2 total">$45</div>
-		<div class="span4">
-			<h3>Sherman Yee</h3>
-			<p>
-				Good job Stewart!
-			</p>
-		</div>
-	</div>
+	{% end %}
 {% end %}
 
 
