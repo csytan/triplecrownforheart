@@ -45,10 +45,11 @@ class User(BaseHandler):
 
 class EditUser(BaseHandler):
     def get(self, id=None):
-        if id:
-            user = models.User.get_by_id(int(id))
-        else:
-            user = None
+        user = models.User.get_by_id(int(id)) if id else None
+        token = self.get_argument('token', None)
+        if not users.is_current_user_admin() or \
+            user and token != user.edit_token:
+            return self.redirect('/')
         self.render('user_edit.html', user=user)
 
     def post(self, id=None):
@@ -56,9 +57,13 @@ class EditUser(BaseHandler):
             user = models.User.get_by_id(int(id))
         else:
             user = models.User()
+        if not users.is_current_user_admin() or \
+            self.get_argument('token', None) != user.edit_token:
+            return self.redirect('/')
         user.name = self.get_argument('name')
         user.goal = int(self.get_argument('goal', 20))
         user.quote = self.get_argument('quote', '')
+        user.set_edit_token()
         user.put()
         self.redirect('/' + str(user.key.id()) + '/' + user.slug)
 
@@ -111,8 +116,7 @@ class PayPalIPN(BaseHandler):
 
 settings = {
     'template_path': os.path.join(os.path.dirname(__file__), 'templates'),
-    'debug': os.environ['SERVER_SOFTWARE'].startswith('Dev'),
-    'cookie_secret': 'hello'
+    'debug': os.environ['SERVER_SOFTWARE'].startswith('Dev')
 }
 app = tornado.wsgi.WSGIApplication([
     (r'/', Index),

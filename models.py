@@ -24,7 +24,7 @@ class User(ndb.Model):
     def slug(self):
     	return ''.join(s for s in self.name if s.isalnum()).lower()
 
-    def set_token(self):
+    def set_edit_token(self):
         self.edit_token = str(uuid.uuid4()).replace('-', '')
 
     def donations(self):

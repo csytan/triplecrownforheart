@@ -135,7 +135,7 @@
 {% block content %}
 	<div class="page-header">
 		{% if admin %}
-			<a href="/{{ user.key.id() }}/{{ user.slug }}/edit" class="btn btn-info pull-right">Edit Profile</a>
+			<a href="/{{ user.key.id() }}/{{ user.slug }}/edit?token={{ user.edit_token }}" class="btn btn-info pull-right">Edit Profile</a>
 		{% end %}
 		<h1>
 			{{ user.name }}
@@ -178,16 +178,15 @@
 	</div>
 
     <form id="donate" class="modal hide" action="https://www.paypal.com/cgi-bin/webscr" method="post">
-        <input type="hidden" name="return" value="http://donate.triplecrownforheart.ca/thank_you">
-        <input type="hidden" name="notify_url" value="http://donate.triplecrownforheart.ca/paypal_ipn">
         <input type="hidden" name="cmd" value="_donations">
+        <input type="hidden" name="return" value="http://donate.triplecrownforheart.com/{{ user.key.id() }}/{{ user.slug }}?thanks=1">
+        <input type="hidden" name="rm" value="1">
+        <input type="hidden" name="cancel_return" value="http://donate.triplecrownforheart.com/{{ user.key.id() }}/{{ user.slug }}">
+        <input type="hidden" name="notify_url" value="http://donate.triplecrownforheart.com/paypal_ipn">
         <input type="hidden" name="business" value="triplecrownforheart@gmail.com">
-        <input type="hidden" name="lc" value="CA">
         <input type="hidden" name="item_name" value="Donation to BC Children's Hospital">
         <input type="hidden" name="item_number" value="{{ user.key.id() }}">
         <input type="hidden" name="currency_code" value="CAD">
-        <input type="hidden" name="button_subtype" value="services">
-        <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHostedGuest">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">×</a>
             <h3>Donate to the BC Children’s Heart Unit</h3>
@@ -248,7 +247,7 @@
 			None yet. Be the first!
 		</div>
 	{% end %}
-	
+
 	{% for donation in donations %}
 		<div class="row-fluid donation">
 			<div class="span2 total">${{ donation.amount }}</div>

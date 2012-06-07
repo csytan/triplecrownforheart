@@ -8,13 +8,13 @@
 
 {% block style %}
     <style>
-        #content {
-            width: 500px;
+        body {
+            background: none;
         }
-
-        #logo {
-            padding-bottom: 25px;
-            border-bottom: 4px solid #ddd;
+        #content {
+            border: none;
+            box-shadow: none;
+            width: 500px;
         }
 
         #users {
@@ -45,11 +45,9 @@
 {% block content %}
     <div class="page-header">
         <h1>Triple Crown For Heart
-            <small>Leaderboard</small>
+            <small>Donations</small>
         </h1>
     </div>
-
-    <img id="logo" src="/static/logo.png">
 
     <table id="users">
         <thead>
@@ -62,7 +60,7 @@
             {% for i, user in enumerate(users) %}
                 <tr>
                     <td class="user">
-                        <a href="/{{ user.key.id() }}/{{ user.slug }}">
+                        <a href="http://donate.triplecrownforheart.com/{{ user.key.id() }}/{{ user.slug }}" target="_blank">
                             {{ i + 1 }}. {{ user.name }}
                         </a>
                         <span class="quote">

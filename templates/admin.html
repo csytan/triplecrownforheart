@@ -31,7 +31,7 @@
                     <a href="/{{ user.key.id() }}/{{ user.slug }}">{{ user.name }}</a>
                 </td>
                 <td>
-                    <a href="/{{ user.key.id() }}/{{ user.slug }}/edit" class="btn btn-info">Edit</a>
+                    <a href="/{{ user.key.id() }}/{{ user.slug }}/edit?token={{ user.edit_token }}" class="btn btn-info">Edit</a>
                 </td>
             </tr>
         {% end %}
