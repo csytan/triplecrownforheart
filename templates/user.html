@@ -8,7 +8,7 @@
 {% block style %}
 	<style>
 		#stats {
-			margin-bottom: 30px;
+			margin-bottom: 15px;
 		}
 		#stats .progress_bar {
 			float: left;
@@ -81,7 +81,7 @@
 		    font-size: 1.25em;
 		    padding: 25px 5px 25px 30px;
 		    font-style: italic;
-		    margin: 25px 0;
+		    margin: 25px 0 10px;
 		}
 		blockquote:before, blockquote:after { 
 		    position: absolute;
@@ -109,12 +109,26 @@
 			text-align: center;
 		}
 
-
 		#donate {
 			width: 400px;
 			margin-left: -195px;
 		}
 
+		#fb_like {
+			height: 35px;
+            width: 450px;
+            margin: auto;
+		}
+		#fb_like .fb-like {
+			margin-left: 180px;
+		}
+
+		#thanks {
+			font-size: 18px;
+			font-weight: bold;
+			text-align: center;
+			padding: 20px;
+		}
 	</style>
 {% end %}
 
@@ -127,21 +141,56 @@
 			$('#stats .progress_bar .bar')
 				.delay(400)
 				.animate({height: height}, 1000);
+
+			$('#donate a.submit').click(function(){
+				$(this).closest('form').submit();
+				return false;
+			});
+			$('#donate input[name="amount"]').keyup(function(){
+				this.value = this.value.replace(/[^\d]/,'');
+			});
+			$('#donate textarea[name="custom"]').keyup(function(){
+				this.value = this.value.substring(0, 250);
+			});
+
+			// Facebook Like Button
+			(function(d, s, id) {
+			  var js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+			  js = d.createElement(s); js.id = id;
+			  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+			  fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
 		});
 	</script>
+{% end %}
+
+
+{% block fb_like %}
+	<div id="fb_like">
+		<div id="fb-root"></div>
+		<div class="fb-like" data-send="false" data-width="300" data-show-faces="false"
+			data-href="http://donate.triplecrownforheart.com{{ user.href }}"></div>
+	</div>
 {% end %}
 
 
 {% block content %}
 	<div class="page-header">
 		{% if admin %}
-			<a href="/{{ user.key.id() }}/{{ user.slug }}/edit?token={{ user.edit_token }}" class="btn btn-info pull-right">Edit Profile</a>
+			<a href="{{ user.href }}/edit?token={{ user.edit_token }}" class="btn pull-right">Edit Profile</a>
 		{% end %}
 		<h1>
 			{{ user.name }}
 			<small>Cyclist</small>
 		</h1>
 	</div>
+
+	{% if handler.get_argument('thanks', None) %}
+		<div id="thanks" class="alert alert-success">
+			Thank you for your donation!
+		</div>
+	{% end %}
 
 	<div id="stats" class="well">
 		<div class="progress_bar">
@@ -179,12 +228,12 @@
 
     <form id="donate" class="modal hide" action="https://www.paypal.com/cgi-bin/webscr" method="post">
         <input type="hidden" name="cmd" value="_donations">
-        <input type="hidden" name="return" value="http://donate.triplecrownforheart.com/{{ user.key.id() }}/{{ user.slug }}?thanks=1">
+        <input type="hidden" name="return" value="http://donate.triplecrownforheart.com{{ user.href }}?thanks=1">
         <input type="hidden" name="rm" value="1">
-        <input type="hidden" name="cancel_return" value="http://donate.triplecrownforheart.com/{{ user.key.id() }}/{{ user.slug }}">
+        <input type="hidden" name="cancel_return" value="http://donate.triplecrownforheart.com{{ user.href }}">
         <input type="hidden" name="notify_url" value="http://donate.triplecrownforheart.com/paypal_ipn">
         <input type="hidden" name="business" value="triplecrownforheart@gmail.com">
-        <input type="hidden" name="item_name" value="Donation to BC Children's Hospital">
+        <input type="hidden" name="item_name" value="Donation to the BC Children's Hospital Heart Unit">
         <input type="hidden" name="item_number" value="{{ user.key.id() }}">
         <input type="hidden" name="currency_code" value="CAD">
         <div class="modal-header">
@@ -193,15 +242,8 @@
         </div>
         <div class="modal-body">
         	<div class="alert alert-info">
-        		A tax deductable receipt for donations above $20 will be sent to your billing address 
-        		in the mail.
+        		A tax deductable receipt for donations above $20 will be sent by mail to your billing address.
         	</div>
-            <div class="control-group">
-                <label class="control-label">Your Name</label>
-                <div class="controls">
-                    <input name="email" placeholder="John Doe" type="text">
-                </div>
-            </div>
             <div class="control-group">
                 <label class="control-label">Donation Amount (in dollars)</label>
                 <div class="controls">
@@ -209,14 +251,14 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label">Comment</label>
+                <label class="control-label">Comment (publically displayed on the donation page)</label>
                 <div class="controls">
-                    <textarea name="custom" class="span4" rows="4"></textarea>
+                    <textarea name="custom" class="span4" rows="4" placeholder="Good luck on your ride!"></textarea>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-        	<a class="btn btn-success btn-large">
+        	<a class="submit btn btn-success btn-large">
         		Continue to PayPal
         		<i class="icon-arrow-right"></i>
         	</a>
@@ -226,17 +268,6 @@
 	{% if user.quote %}
 		<blockquote>{{ user.quote }}</blockquote>
 	{% end %}
-
-	<div id="fb-root"></div>
-	<script>(function(d, s, id) {
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=237956989555822";
-	  fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script>
-	<div class="fb-like" data-send="false" data-width="350" data-show-faces="true"></div>
-
 
 	<div class="page-header">
 		<h2>Donations</h2>

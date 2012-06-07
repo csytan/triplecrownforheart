@@ -1,4 +1,5 @@
 import datetime
+import json
 import os
 
 from google.appengine.api import users
@@ -65,7 +66,7 @@ class EditUser(BaseHandler):
         user.quote = self.get_argument('quote', '')
         user.set_edit_token()
         user.put()
-        self.redirect('/' + str(user.key.id()) + '/' + user.slug)
+        self.redirect(user.href)
 
 
 class PayPalIPN(BaseHandler):
@@ -97,21 +98,16 @@ class PayPalIPN(BaseHandler):
         donation = models.Donation(
             key_name=data['txn_id'],
             payer_email=data['payer_email'],
-            gross=int(float(data['mc_gross']) * 100),
-            fee=int(float(data.get('mc_fee', 0)) * 100),
+            amount=int(float(data['mc_gross'])),
             status=data['payment_status'],
-            data=str(data))
-        payment.put()
-                
-        if payment.status == 'Completed':
-            user_id = int(data['item_number'])
-            user = models.User.get_by_id(user_id)
-            user.raised += payment.gross
+            data=json.dumps(data))
+        donation.put()
+
+        user_id = int(data['item_number'])
+        user = models.User.get_by_id(user_id)
+        if user:
+            user.update_raised()
             user.put()
-            self.send_mail(
-                user=user,
-                subject='Payment received',
-                template='email_payment_received.txt')
 
 
 settings = {
@@ -123,7 +119,8 @@ app = tornado.wsgi.WSGIApplication([
     (r'/admin', Admin),
     (r'/new_user', EditUser),
     (r'/(\d+)/.+/edit', EditUser),
-    (r'/(\d+)/.+', User)
+    (r'/(\d+)/.+', User),
+    (r'/paypal_ipn', PayPalIPN)
 ], **settings)
 
 app = ndb.toplevel(app)

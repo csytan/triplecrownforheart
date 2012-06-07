@@ -60,7 +60,7 @@
             {% for i, user in enumerate(users) %}
                 <tr>
                     <td class="user">
-                        <a href="http://donate.triplecrownforheart.com/{{ user.key.id() }}/{{ user.slug }}" target="_blank">
+                        <a href="http://donate.triplecrownforheart.com{{ user.href }}" target="_blank">
                             {{ i + 1 }}. {{ user.name }}
                         </a>
                         <span class="quote">

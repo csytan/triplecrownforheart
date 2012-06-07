@@ -10,11 +10,13 @@
     <div class="page-header">
         <h1>
             {% if user %}
-                {{ user.name }}
-                <small>Edit User</small>
+                Edit User
+                <small>
+                    <a href="{{ user.href }}">{{ user.name }}</a>
+                </small>
             {% else %}
-                Triple Crown For Heart
-                <small>New User</small>
+                New User
+                <small>Triple Crown For Heart</small>
             {% end %}
         </h1>
     </div>
