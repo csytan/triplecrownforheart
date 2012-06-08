@@ -186,7 +186,7 @@
 		</h1>
 	</div>
 
-	{% if handler.get_argument('thanks', None) %}
+	{% if handler.get_argument('thanks', None) or handler.get_argument('payment_status', None) %}
 		<div id="thanks" class="alert alert-success">
 			Thank you for your donation!
 		</div>
