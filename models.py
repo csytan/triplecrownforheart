@@ -31,7 +31,8 @@ class User(ndb.Model):
         return '/' + str(self.key.id()) + '/' + slug
 
     def set_edit_token(self):
-        self.edit_token = str(uuid.uuid4()).replace('-', '')
+        if not self.edit_token:
+            self.edit_token = str(uuid.uuid4()).replace('-', '')
 
     def donations(self):
         return Donation.query(Donation.user == self.key).fetch(1000)

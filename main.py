@@ -48,20 +48,26 @@ class User(BaseHandler):
 class EditUser(BaseHandler):
     def get(self, id=None):
         user = models.User.get_by_id(int(id)) if id else None
-        token = self.get_argument('token', None)
-        if not users.is_current_user_admin() or \
-            user and token != user.edit_token:
+        token = self.get_argument('token', '')
+        if not user:
+            raise tornado.web.HTTPError(404)
+        if not (token == user.edit_token or users.is_current_user_admin()):
             return self.redirect('/')
-        self.render('user_edit.html', user=user)
+        self.render('user_edit.html', user=user, admin=users.is_current_user_admin())
 
     def post(self, id=None):
         if id:
             user = models.User.get_by_id(int(id))
         else:
             user = models.User()
-        if not users.is_current_user_admin() or \
-            self.get_argument('token', None) != user.edit_token:
+        token = self.get_argument('token', '')
+        if not (token == user.edit_token or users.is_current_user_admin()):
             return self.redirect('/')
+
+        if self.get_argument('action', None) == 'remove':
+            user.key.delete()
+            return self.redirect('/admin')
+
         user.name = self.get_argument('name')
         user.goal = int(self.get_argument('goal', 20))
         user.quote = self.get_argument('quote', '')
@@ -95,7 +101,7 @@ class PayPalIPN(BaseHandler):
         if data['mc_currency'] != 'CAD' or \
             data['receiver_email'] != 'triplecrownforheart@gmail.com':
             return
-        
+
         user_id = int(data['item_number'])
         user = models.User.get_by_id(user_id)
         if user:
