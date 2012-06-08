@@ -19,10 +19,15 @@ class User(ndb.Model):
     @classmethod
     def users_by_name(cls):
         return cls.query().order(cls.name).fetch(1000)
-        
+
     @property
     def href(self):
-        slug = ''.join(s for s in self.name if s.isalnum()).lower()
+        slug = ''
+        for s in self.name:
+            if s == ' ':
+                slug += '_'
+            elif s.isalnum():
+                slug += s.lower()
         return '/' + str(self.key.id()) + '/' + slug
 
     def set_edit_token(self):
@@ -41,9 +46,9 @@ class User(ndb.Model):
 
 class Donation(ndb.Model):
     user = ndb.KeyProperty()
-    donor_name = ndb.StringProperty()
+    donor_name = ndb.StringProperty(indexed=False)
     donor_email = ndb.StringProperty()
-    donor_comment = ndb.StringProperty()
+    donor_comment = ndb.TextProperty()
     amount = ndb.IntegerProperty(default=0)
     status = ndb.StringProperty(indexed=False)
     data = ndb.TextProperty()

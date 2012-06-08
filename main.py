@@ -95,18 +95,20 @@ class PayPalIPN(BaseHandler):
         if data['mc_currency'] != 'CAD' or \
             data['receiver_email'] != 'triplecrownforheart@gmail.com':
             return
-
-        donation = models.Donation(
-            key_name=data['txn_id'],
-            payer_email=data['payer_email'],
-            amount=int(float(data['mc_gross'])),
-            status=data['payment_status'],
-            data=json.dumps(data))
-        donation.put()
-
+        
         user_id = int(data['item_number'])
         user = models.User.get_by_id(user_id)
         if user:
+            donation = models.Donation(
+                user=user.key,
+                id=data['txn_id'],
+                donor_email=data['payer_email'],
+                donor_name=data['first_name'] + ' ' + data['last_name'],
+                donor_comment=data['custom'],
+                amount=int(float(data['mc_gross'])),
+                status=data['payment_status'],
+                data=json.dumps(data))
+            donation.put()
             user.update_raised()
             user.put()
 
