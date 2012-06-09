@@ -114,10 +114,16 @@
 			margin-left: -195px;
 		}
 
+		.page-header {
+			padding-bottom: 0;
+			margin-top: 10px;
+		}
+		.page-header h1 {
+			font-size: 35px;
+		}
 		#fb_like {
-			position: absolute;
-            width: 50px;
-            left: -60px;
+			height: 25px;
+			margin: 7px 0;
 		}
 
 		#thanks {
@@ -155,9 +161,6 @@
 
 
 {% block content %}
-	<iframe id="fb_like" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fdonate.triplecrownforheart.com&amp;send=false&amp;layout=box_count&amp;width=200&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=90" scrolling="no" frameborder="0"
-		style="border:none; overflow:hidden;" allowTransparency="true"></iframe>
-
 	<div class="page-header">
 		{% if admin %}
 			<a href="{{ user.href }}/edit?token={{ user.edit_token }}" class="btn pull-right">Edit Profile</a>
@@ -165,6 +168,7 @@
 		<h1>
 			{{ user.name }}
 			<small>Cyclist</small>
+			<iframe id="fb_like" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fdonate.triplecrownforheart.com{{ url_escape(user.href) }}&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowTransparency="true"></iframe>
 		</h1>
 	</div>
 
