@@ -49,9 +49,7 @@ class EditUser(BaseHandler):
     def get(self, id=None):
         user = models.User.get_by_id(int(id)) if id else None
         token = self.get_argument('token', '')
-        if not user:
-            raise tornado.web.HTTPError(404)
-        if not (token == user.edit_token or users.is_current_user_admin()):
+        if not ((user and token == user.edit_token) or users.is_current_user_admin()):
             return self.redirect('/')
         self.render('user_edit.html', user=user, admin=users.is_current_user_admin())
 

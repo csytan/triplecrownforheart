@@ -12,9 +12,10 @@
         body {
             background: #eee url(/static/bgnoise.gif);
             background: url(/static/subtle_stripes.png);
-            padding: 35px 0;
+            padding: 40px 0;
         }
         #content {
+            position: relative;
             width: 450px;
             margin: auto;
             padding: 2em;
@@ -31,7 +32,6 @@
 </head>
 
 <body>
-    {% block fb_like %}{% end %}
     <div id="content">
     	{% block content %}{% end %}
     </div>
