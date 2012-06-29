@@ -49,9 +49,29 @@
             </div>
         </div>
         <div class="control-group">
+            <label class="control-label">Email</label>
+            <div class="controls">
+                <input type="text" name="email" placeholder="johndoe@email.com" value="{{ user.email if user and user.email else '' }}">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Send Email</label>
+            <div class="controls">
+                <label class="checkbox">
+                    <input type="checkbox" name="send_email" value="1"> Send welcome email
+                </label>
+            </div>
+        </div>
+        <div class="control-group">
             <label class="control-label">Goal $</label>
             <div class="controls">
                 <input type="text" name="goal" placeholder="50" value="{{ user.goal if user else '' }}">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Title (optional)</label>
+            <div class="controls">
+                <input type="text" name="title" value="{{ user.title if user else 'Participant' }}">
             </div>
         </div>
         <div class="control-group">
@@ -60,6 +80,7 @@
                 <input type="text" name="quote" placeholder="" value="{{ user.quote if user else '' }}">
             </div>
         </div>
+
         <div class="form-actions">
             {% if user %}
                 <input type="submit" class="btn btn-success" value="Save Changes">

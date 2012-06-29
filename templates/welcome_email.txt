@@ -1,0 +1,20 @@
+Welcome to the Triple Crown for Heart ride!
+
+We are so excited you have chosen to join us for a challenging ride to the top of three mountains in Vancouver in a single day. It’s going to be a tough day, but if you’re prepared, it will be a lot of fun and a real accomplishment, and your friends will be in awe of what you have done. 
+
+As you probably know, the Triple Crown for Heart is a non-profit charity ride to raise money for the cardiac unit of the Children’s Hospital through the BC Children’s Hospital Foundation. We have some corporate sponsors, but we hope to raise the bulk of donations through the individual fundraising of our riders... you! You are taking on a huge challenge to complete the ride, and it’s a great opportunity to set a fundraising goal, and then contact your friends, family and co-workers to help you reach it. There’s no obligation, but you’d be surprised how many people will gladly donate to a good cause, especially when they think you’re doing something completely crazy!
+
+To help you with this, we’ve created a fantastic tool to let you set your goal and then collect money to reach it. You can access your personal donation page at:
+{{ edit_page }}
+
+Here you can set your target amount, as well as a quote for your ride. You can then share the following link on email, Facebook, Twitter, whatever, and anyone can donate to your goal using Paypal:
+{{ donation_page }}
+
+We also have a leaderboard of the top fundraisers, so you can be a winner even if you haven’t reached your peak fitness this early in the season:
+http://triplecrownforheart.ca/participants/
+
+And of course any donations over $20 will receive a tax receipt from BC Children’s Hospital Foundation.
+
+This is a great opportunity to use your accomplishment to help some really great and deserving kids.
+
+See you on the mountains!

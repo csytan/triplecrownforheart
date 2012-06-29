@@ -16,5 +16,9 @@ handlers:
   script: main.app
   login: admin
 
+- url: /welcome_email
+  script: main.app
+  login: admin
+
 - url: .*
   script: main.app

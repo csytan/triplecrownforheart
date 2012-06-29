@@ -8,8 +8,13 @@
 
 {% block style %}
     <style>
-        #users .user {
-            width: 90%;
+        #users {
+            font-size: 18px;
+            margin-top: 30px;
+            width: 100%;
+        }
+        #users td.user {
+            width: 80%;
         }
     </style>
 {% end %}
@@ -21,17 +26,17 @@
     </div>
 
     <div class="well">
-        <a href="/new_user" class="btn btn-success">Add a new user</a>
+        <a href="/new_user" class="btn btn-large btn-success">Add a new user</a>
+        <a href="/welcome_email" class="btn btn-large btn-info">Edit Welcome Email</a>
     </div>
     <table id="users">
         {% for i, user in enumerate(users) %}
             <tr>
                 <td class="user">
-                    {{ i + 1 }}.
-                    <a href="{{ user.href }}">{{ user.name }}</a>
+                    <a href="{{ user.href }}">{{ i + 1 }}. {{ user.name }}</a>
                 </td>
-                <td>
-                    <a href="{{ user.href }}/edit?token={{ user.edit_token }}" class="btn btn-info">Edit</a>
+                <td class="edit">
+                    <a href="{{ user.href }}/edit?token={{ user.edit_token }}">Edit Profile</a>
                 </td>
             </tr>
         {% end %}

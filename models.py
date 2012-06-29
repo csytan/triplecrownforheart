@@ -1,11 +1,15 @@
 import uuid
 
+from google.appengine.api import mail
 from google.appengine.ext import ndb
+
 
 
 class User(ndb.Model):
     created = ndb.DateTimeProperty(auto_now_add=True)
     name = ndb.StringProperty()
+    email = ndb.StringProperty()
+    title = ndb.StringProperty()
     raised = ndb.IntegerProperty(default=0)
     goal = ndb.IntegerProperty(default=20)
     n_donations = ndb.IntegerProperty(default=0)
@@ -44,6 +48,17 @@ class User(ndb.Model):
         for donation in donations:
             self.raised += donation.amount
 
+    def send_email(self):
+        template = WelcomeEmail.get_by_id('welcome_email')
+        donation_link = 'http://www.triplecrownforheart.com/' + self.href
+        email = template.text.format(
+            donation_link=donation_link,
+            edit_link=donation_link + '/edit?token=' + self.edit_token)
+        mail.send_mail(sender='TripleCrownForHeart <triplecrownforheart@gmail.com>',
+            to=self.email,
+            subject='Welcome to Triple Crown for Heart',
+            body=email)
+
 
 class Donation(ndb.Model):
     user = ndb.KeyProperty()
@@ -53,5 +68,9 @@ class Donation(ndb.Model):
     amount = ndb.IntegerProperty(default=0)
     status = ndb.StringProperty(indexed=False)
     data = ndb.TextProperty()
+
+
+class WelcomeEmail(ndb.Model):
+    text = ndb.TextProperty()
 
 

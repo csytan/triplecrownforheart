@@ -161,13 +161,19 @@
 
 
 {% block content %}
+	{% if admin %}
+		<div id="admin_links">
+			<a href="{{ user.href }}/edit?token={{ user.edit_token }}" class="btn btn-large btn-success pull-right">Edit Profile</a>
+			<a href="/admin" class="btn btn-large pull-right">
+				<i class="icon-arrow-left"></i> Back to Admin Page
+			</a>
+		</div>
+	{% end %}
+
 	<div class="page-header">
-		{% if admin %}
-			<a href="{{ user.href }}/edit?token={{ user.edit_token }}" class="btn pull-right">Edit Profile</a>
-		{% end %}
 		<h1>
 			{{ user.name }}
-			<small>Cyclist</small>
+			<small>{{ user.title }}</small>
 			<iframe id="fb_like" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fdonate.triplecrownforheart.com{{ url_escape(user.href) }}&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowTransparency="true"></iframe>
 		</h1>
 	</div>

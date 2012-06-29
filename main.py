@@ -65,13 +65,29 @@ class EditUser(BaseHandler):
         if self.get_argument('action', None) == 'remove':
             user.key.delete()
             return self.redirect('/admin')
-
         user.name = self.get_argument('name')
+        user.email = self.get_argument('email', None)
         user.goal = int(self.get_argument('goal', 20))
+        user.title = self.get_argument('title', '')
         user.quote = self.get_argument('quote', '')
         user.set_edit_token()
         user.put()
+
+        if self.get_argument('send_email', None):
+            user.send_email()
         self.redirect(user.href)
+
+
+class WelcomeEmail(BaseHandler):
+    def get(self):
+        email = models.WelcomeEmail.get_or_insert('welcome_email')
+        self.render('welcome_email.html', email=email)
+
+    def post(self):
+        email = models.WelcomeEmail.get_or_insert('welcome_email')
+        email.text = self.get_argument('text', '')
+        email.put()
+        self.redirect('/welcome_email?message=updated')
 
 
 class PayPalIPN(BaseHandler):
@@ -124,6 +140,7 @@ settings = {
 app = tornado.wsgi.WSGIApplication([
     (r'/', Index),
     (r'/admin', Admin),
+    (r'/welcome_email', WelcomeEmail),
     (r'/new_user', EditUser),
     (r'/(\d+)/.+/edit', EditUser),
     (r'/(\d+)/.+', User),
