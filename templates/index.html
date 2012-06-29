@@ -59,9 +59,11 @@
                         <a href="http://donate.triplecrownforheart.com{{ user.href }}" target="_blank">
                             {{ i + 1 }}. {{ user.name }}
                         </a>
-                        <span class="quote">
-                            "{{ user.quote }}"
-                        </span>
+                        {% if user.quote %}
+                            <span class="quote">
+                                "{{ user.quote }}"
+                            </span>
+                        {% end %}
                     </td>
                     <td class="raised">${{ user.raised }}</td>
                 </li>

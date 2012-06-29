@@ -11,7 +11,7 @@ class User(ndb.Model):
     email = ndb.StringProperty()
     title = ndb.StringProperty()
     raised = ndb.IntegerProperty(default=0)
-    goal = ndb.IntegerProperty(default=20)
+    goal = ndb.IntegerProperty(default=200)
     n_donations = ndb.IntegerProperty(default=0)
     quote = ndb.TextProperty()
     edit_token = ndb.StringProperty()
