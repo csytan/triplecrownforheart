@@ -50,7 +50,7 @@ class User(ndb.Model):
 
     def send_email(self):
         template = WelcomeEmail.get_by_id('welcome_email')
-        donation_link = 'http://www.triplecrownforheart.com/' + self.href
+        donation_link = 'http://donate.triplecrownforheart.com' + self.href
         email = template.text.format(
             donation_link=donation_link,
             edit_link=donation_link + '/edit?token=' + self.edit_token)

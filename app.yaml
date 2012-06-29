@@ -20,5 +20,9 @@ handlers:
   script: main.app
   login: admin
 
+- url: /bulk_add_users
+  script: main.app
+  login: admin
+
 - url: .*
   script: main.app

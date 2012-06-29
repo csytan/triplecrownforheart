@@ -90,6 +90,20 @@ class WelcomeEmail(BaseHandler):
         self.redirect('/welcome_email?message=updated')
 
 
+class BulkAddUsers(BaseHandler):
+    def get(self):
+        import csv
+        reader = csv.reader(open('riders.csv', 'r'), delimiter=',')
+        for row in reader:
+            user = models.User(
+                name=row[0],
+                email=row[1],
+                title='Participant')
+            user.set_edit_token()
+            user.put()
+            user.send_email()
+
+
 class PayPalIPN(BaseHandler):
     def check_xsrf_cookie(self):
         """Disables XSRF token check"""
@@ -142,6 +156,7 @@ app = tornado.wsgi.WSGIApplication([
     (r'/admin', Admin),
     (r'/welcome_email', WelcomeEmail),
     (r'/new_user', EditUser),
+    (r'/bulk_add_users', BulkAddUsers),
     (r'/(\d+)/.+/edit', EditUser),
     (r'/(\d+)/.+', User),
     (r'/paypal_ipn', PayPalIPN)

@@ -140,7 +140,7 @@
 	<script>
 		jQuery(function($){
 			var raised = {{ user.raised }} / {{ user.goal }};
-			var height = (raised * 198) + 'px';
+			var height = Math.min(raised * 198, 198) + 'px';
 			$('#stats .progress_bar .bar')
 				.delay(400)
 				.animate({height: height}, 1000);
