@@ -138,7 +138,7 @@ class PayPalIPN(BaseHandler):
                 id=data['txn_id'],
                 donor_email=data['payer_email'],
                 donor_name=data['first_name'] + ' ' + data['last_name'],
-                donor_comment=data['custom'],
+                donor_comment=data.get('custom', ''),
                 amount=int(float(data['mc_gross'])),
                 status=data['payment_status'],
                 data=json.dumps(data))
