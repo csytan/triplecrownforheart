@@ -67,7 +67,7 @@ class EditUser(BaseHandler):
             return self.redirect('/admin')
         user.name = self.get_argument('name')
         user.email = self.get_argument('email', None)
-        user.goal = int(self.get_argument('goal', 20))
+        user.goal = int(self.get_argument('goal', 200))
         user.title = self.get_argument('title', '')
         user.quote = self.get_argument('quote', '')
         user.set_edit_token()
