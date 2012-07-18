@@ -58,7 +58,7 @@
             <label class="control-label">Send Email</label>
             <div class="controls">
                 <label class="checkbox">
-                    <input type="checkbox" name="send_email" value="1"> Send welcome email
+                    <input type="checkbox" name="send_email" value="1" {% if not user %}checked{% end %}> Send welcome email
                 </label>
             </div>
         </div>
