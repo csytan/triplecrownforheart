@@ -23,6 +23,11 @@ class Index(BaseHandler):
         self.render('index.html', users=models.User.users_by_raised())
 
 
+class Register(BaseHandler):
+    def get(self):
+        self.render('register.html')
+
+
 class Admin(BaseHandler):
     def get(self):
         self.render('admin.html', users=models.User.users_by_name())
@@ -153,6 +158,7 @@ settings = {
 }
 app = tornado.wsgi.WSGIApplication([
     (r'/', Index),
+    (r'/register', Register),
     (r'/admin', Admin),
     (r'/welcome_email', WelcomeEmail),
     (r'/new_user', EditUser),

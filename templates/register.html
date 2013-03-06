@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    <title>Triple Crown For Heart - Registration</title>
+{% end %}
+
+
+{% block content %}
+    <div class="page-header">
+        <h1>Registration <small>Triple Crown For Heart</small></h1>
+    </div>
+    <div class="well">
+        Please fill the <a href="http://triplecrownforheart.ca/waiver/" target="_blank">waiver</a> out and provide it to the Triple Crown Event Coordinators on the day of the ride, July 28th, 2013.
+        <br><br>
+        You must sign a waiver to ride.  You must have your own insurance and emergency contact information with you when you ride.
+        <br><br>
+        At present those under the age of 16 are not permitted to enter this event due to the physical requirements for this ride.
+    </div>
+    <form class="form-horizontal" action="" method="post">
+        {% raw xsrf_form_html() %}
+        <div class="control-group">
+            <label class="control-label">Registration</label>
+            <div class="controls">
+                <label class="radio">
+                    <input type="radio" name="registration_type" value="adult" checked>
+                    $55 - Adult
+                </label>
+                <label class="radio">
+                    <input type="radio" name="registration_type" value="student">
+                    $45 - Student 
+                </label>
+                <label class="radio">
+                    <input type="radio" name="registration_type" value="senior">
+                    $35 - Senior (65 and older)
+                </label>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Full Name</label>
+            <div class="controls">
+                <input type="text" name="name" placeholder="John Doe">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Email</label>
+            <div class="controls">
+                <input type="email" name="email" placeholder="johndoe@example.com">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Phone</label>
+            <div class="controls">
+                <input type="text" name="phone" placeholder="555-555-5555">
+            </div>
+        </div>
+
+        <legend>Address</legend>
+        <div class="control-group">
+            <label class="control-label">Address</label>
+            <div class="controls">
+                <input type="text" name="address" placeholder="123 Broadway St">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">City</label>
+            <div class="controls">
+                <input type="text" name="city" placeholder="Vancouver">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Province</label>
+            <div class="controls">
+                <input type="text" name="province" placeholder="BC">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Postal Code</label>
+            <div class="controls">
+                <input type="text" name="postal_code" placeholder="1A1 A1A">
+            </div>
+        </div>
+
+        <legend>Health &amp; Medical</legend>
+        <div class="control-group">
+            <label class="control-label">Emergency Contact</label>
+            <div class="controls">
+                <input type="text" name="emergency_contact" placeholder="Jane Doe">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Emergency Phone</label>
+            <div class="controls">
+                <input type="text" name="emergency_contact_phone" placeholder="555-555-5555">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Date of Birth (YYYY/MM/DD)</label>
+            <div class="controls">
+                <input type="text" name="birth_date" placeholder="YYYY/MM/DD">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Guardian (if under 18 years)</label>
+            <div class="controls">
+                <input type="text" name="guardian">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">How many times do you exercise each week?</label>
+            <div class="controls">
+                <input type="number" name="weekly_activity" placeholder="3">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Do you have any health conditions?</label>
+            <div class="controls">
+                <input type="text" name="health_conditions">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Do you have any allergies?</label>
+            <div class="controls">
+                <input type="text" name="allergies" placeholder="e.g. insect bites, nuts">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Are you taking any medication?</label>
+            <div class="controls">
+                <input type="text" name="medication">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Are you allergic to any medication?</label>
+            <div class="controls">
+                <input type="text" name="medical_allergies" placeholder="e.g. penicillin">
+            </div>
+        </div>
+
+        <legend>Cycling Info</legend>
+        <div class="control-group">
+            <label class="control-label">I chose to cycle</label>
+            <div class="controls">
+                <select name="mountains">
+                    <option value="cypress">Cypress</option>
+                    <option value="grouse">Grouse</option>
+                    <option value="seymour">Seymour</option>
+                    <option value="all" selected>All 3 mountains</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Cycling Experience</label>
+            <div class="controls">
+                <select name="experience">
+                    <option value="new">New</option>
+                    <option value="intermediate" selected>Intermediate</option>
+                    <option value="expert">Expert</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Club ID Number (optional)</label>
+            <div class="controls">
+                <input type="text" name="club_id">
+            </div>
+        </div>        
+        <div class="control-group">
+            <label class="control-label">What other endurance sports/cycling events have you participated in the in last 2 years?</label>
+            <div class="controls">
+                <input type="text" name="prev_events">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label"></label>
+            <div class="controls">
+                <label class="checkbox">
+                    <input name="waiver" type="checkbox" value="1">
+                    I have read and accepted the 
+                    <a href="http://triplecrownforheart.ca/waiver/" target="_blank">waiver</a>
+                </label>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <input class="btn btn-large btn-success" type="submit" value="Submit">
+            </div>
+        </div>
+    </form>
+{% end %}
+
