@@ -17,6 +17,15 @@ class BaseHandler(tornado.web.RequestHandler):
         self.get(*args, **kwargs)
         self.request.body = ''
 
+    def reload(self, copyargs=False, **kwargs):
+        data = {}
+        if copyargs:
+            for arg in self.request.arguments:
+                if arg not in ('_xsrf', 'password', 'password_again'):
+                    data[arg] = self.get_argument(arg)
+        data.update(kwargs)
+        self.redirect(self.request.path + '?' + urllib.urlencode(data))
+
 
 class Index(BaseHandler):
     def get(self):
@@ -26,6 +35,47 @@ class Index(BaseHandler):
 class Register(BaseHandler):
     def get(self):
         self.render('register.html')
+
+    def post(self):
+        birth_date = self.get_argument('birth_date')
+        birth_date = datetime.datetime.strptime(birth_date, '%Y-%m-%d')
+        weekly_activity = self.get_argument('weekly_activity', None)
+
+        if not self.get_argument('waiver', None):
+            return self.reload()
+
+        user = models.User(
+            name=self.get_argument('name'),
+            email=self.get_argument('email'),
+            phone=self.get_argument('phone'),
+            emergency_contact=self.get_argument('emergency_contact'),
+            emergency_contact_phone = self.get_argument('emergency_contact_phone'),
+            guardian=self.get_argument('guardian', None),
+            birth_date=birth_date,
+            experience=self.get_argument('experience'),
+            club_id=self.get_argument('club_id', None),
+            prev_events=self.get_argument('prev_events', None),
+            weekly_activity=int(weekly_activity) if weekly_activity else None,
+            health_conditions=self.get_argument('health_conditions', None),
+            allergies=self.get_argument('allergies', None),
+            medication=self.get_argument('medication', None),
+            medical_allergies=self.get_argument('medical_allergies', None),
+            mountains=self.get_argument('mountains', None),
+            street=self.get_argument('street', None),
+            city=self.get_argument('city', None),
+            province=self.get_argument('province', None),
+            postal_code=self.get_argument('postal_code', None),
+            registration_type=self.get_argument('registration_type', None))
+        user.put()
+        self.redirect('/register/' + str(user.key.id()))
+
+
+class Payment(BaseHandler):
+    def get(self, id):
+        user = models.User.get_by_id(int(id))
+        if not user:
+            raise tornado.web.HTTPError(404)
+        self.render('payment.html', user=user)
 
 
 class Admin(BaseHandler):
@@ -95,20 +145,6 @@ class WelcomeEmail(BaseHandler):
         self.redirect('/welcome_email?message=updated')
 
 
-class BulkAddUsers(BaseHandler):
-    def get(self):
-        import csv
-        reader = csv.reader(open('riders.csv', 'r'), delimiter=',')
-        for row in reader:
-            user = models.User(
-                name=row[0],
-                email=row[1],
-                title='Participant')
-            user.set_edit_token()
-            user.put()
-            user.send_email()
-
-
 class PayPalIPN(BaseHandler):
     def check_xsrf_cookie(self):
         """Disables XSRF token check"""
@@ -135,9 +171,14 @@ class PayPalIPN(BaseHandler):
             data['receiver_email'] != 'triplecrownforheart@gmail.com':
             return
 
-        user_id = int(data['item_number'])
-        user = models.User.get_by_id(user_id)
-        if user:
+        action, user_id = data['item_number'].split(':')
+        user = models.User.get_by_id(int(user_id))
+        if not user:
+            return
+
+        if action == 'register':
+            user.registration_type
+        elif action == 'donate':
             donation = models.Donation(
                 user=user.key,
                 id=data['txn_id'],
@@ -159,6 +200,7 @@ settings = {
 app = tornado.wsgi.WSGIApplication([
     (r'/', Index),
     (r'/register', Register),
+    (r'/register/(\d+)', Payment),
     (r'/admin', Admin),
     (r'/welcome_email', WelcomeEmail),
     (r'/new_user', EditUser),

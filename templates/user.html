@@ -238,7 +238,7 @@
         <input type="hidden" name="notify_url" value="http://donate.triplecrownforheart.com/paypal_ipn">
         <input type="hidden" name="business" value="triplecrownforheart@gmail.com">
         <input type="hidden" name="item_name" value="Donation to the BC Children's Hospital Heart Unit">
-        <input type="hidden" name="item_number" value="{{ user.key.id() }}">
+        <input type="hidden" name="item_number" value="donate:{{ user.key.id() }}">
         <input type="hidden" name="currency_code" value="CAD">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">×</a>

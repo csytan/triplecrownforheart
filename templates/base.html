@@ -8,31 +8,7 @@
     <link type="text/css" rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/bootstrap/css/bootstrap-responsive.min.css">
     <link type="text/css" rel="stylesheet" href="/static/FontAwesome/css/font-awesome.css">
-    <style>
-        body {
-            background: #eee url(/static/bgnoise.gif);
-            background: url(/static/subtle_stripes.png);
-            padding: 40px 0;
-        }
-        #content {
-            width: 450px;
-            margin: auto;
-            padding: 2em;
-            border: 1px solid #CFCFCF;
-            border-radius: 8px;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
-            background: white;
-        }
-
-        #admin_links {
-            position: fixed;
-            top: 10px;
-            right: 20px;
-        }
-        #admin_links .btn {
-            margin-left: 10px;
-        }
-    </style>
+    {% block base_style %}{% end %}
     {% block style %}{% end %}
     <script src="/static/jquery-1.7.2.min.js"></script>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>

@@ -23,7 +23,7 @@ class User(ndb.Model):
     medication = ndb.StringProperty(indexed=False)
     medical_allergies = ndb.StringProperty(indexed=False)
     mountains = ndb.StringProperty(indexed=False, choices=['all', 'cypress', 'seymour', 'grouse'])
-    address = ndb.StringProperty(indexed=False)
+    street = ndb.StringProperty(indexed=False)
     city = ndb.StringProperty(indexed=False)
     province = ndb.StringProperty(indexed=False)
     postal_code = ndb.StringProperty(indexed=False)

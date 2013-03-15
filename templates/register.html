@@ -6,6 +6,16 @@
 {% end %}
 
 
+{% block script %}
+    <script src="/static/jquery-validation/jquery.validate.js"></script>
+    <script>
+        $(function(){
+            $('#registration').validate();
+        });
+    </script>
+{% end %}
+
+
 {% block content %}
     <div class="page-header">
         <h1>Registration <small>Triple Crown For Heart</small></h1>
@@ -17,7 +27,7 @@
         <br><br>
         At present those under the age of 16 are not permitted to enter this event due to the physical requirements for this ride.
     </div>
-    <form class="form-horizontal" action="" method="post">
+    <form id="registration" class="form-horizontal" action="" method="post">
         {% raw xsrf_form_html() %}
         <div class="control-group">
             <label class="control-label">Registration</label>
@@ -39,19 +49,19 @@
         <div class="control-group">
             <label class="control-label">Full Name</label>
             <div class="controls">
-                <input type="text" name="name" placeholder="John Doe">
+                <input class="required" type="text" name="name" placeholder="John Doe">
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Email</label>
             <div class="controls">
-                <input type="email" name="email" placeholder="johndoe@example.com">
+                <input class="required email" type="email" name="email" placeholder="johndoe@example.com">
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Phone</label>
             <div class="controls">
-                <input type="text" name="phone" placeholder="555-555-5555">
+                <input class="required" type="text" name="phone" placeholder="555-555-5555">
             </div>
         </div>
 
@@ -59,25 +69,25 @@
         <div class="control-group">
             <label class="control-label">Address</label>
             <div class="controls">
-                <input type="text" name="address" placeholder="123 Broadway St">
+                <input class="required" type="text" name="address" placeholder="123 Broadway St">
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">City</label>
             <div class="controls">
-                <input type="text" name="city" placeholder="Vancouver">
+                <input class="required" type="text" name="city" placeholder="Vancouver">
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Province</label>
             <div class="controls">
-                <input type="text" name="province" placeholder="BC">
+                <input class="required" type="text" name="province" placeholder="BC">
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Postal Code</label>
             <div class="controls">
-                <input type="text" name="postal_code" placeholder="1A1 A1A">
+                <input class="required" type="text" name="postal_code" placeholder="1A1 A1A">
             </div>
         </div>
 
@@ -85,19 +95,19 @@
         <div class="control-group">
             <label class="control-label">Emergency Contact</label>
             <div class="controls">
-                <input type="text" name="emergency_contact" placeholder="Jane Doe">
+                <input class="required" type="text" name="emergency_contact" placeholder="Jane Doe">
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Emergency Phone</label>
             <div class="controls">
-                <input type="text" name="emergency_contact_phone" placeholder="555-555-5555">
+                <input class="required" type="text" name="emergency_contact_phone" placeholder="555-555-5555">
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label">Date of Birth (YYYY/MM/DD)</label>
+            <label class="control-label">Birthdate (yyyy-mm-dd)</label>
             <div class="controls">
-                <input type="text" name="birth_date" placeholder="YYYY/MM/DD">
+                <input class="required date" type="text" name="birth_date" placeholder="yyyy-mm-dd">
             </div>
         </div>
         <div class="control-group">
@@ -109,7 +119,7 @@
         <div class="control-group">
             <label class="control-label">How many times do you exercise each week?</label>
             <div class="controls">
-                <input type="number" name="weekly_activity" placeholder="3">
+                <input class="digits" type="number" name="weekly_activity" placeholder="3">
             </div>
         </div>
         <div class="control-group">
@@ -168,7 +178,7 @@
         <div class="control-group">
             <label class="control-label">What other endurance sports/cycling events have you participated in the in last 2 years?</label>
             <div class="controls">
-                <input type="text" name="prev_events">
+                <textarea name="prev_events" rows="3"></textarea>
             </div>
         </div>
 
@@ -176,7 +186,7 @@
             <label class="control-label"></label>
             <div class="controls">
                 <label class="checkbox">
-                    <input name="waiver" type="checkbox" value="1">
+                    <input class="required" name="waiver" type="checkbox" value="1">
                     I have read and accepted the 
                     <a href="http://triplecrownforheart.ca/waiver/" target="_blank">waiver</a>
                 </label>
