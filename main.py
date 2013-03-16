@@ -3,6 +3,7 @@ import json
 import os
 import urllib
 
+from google.appengine.api import mail
 from google.appengine.api import users
 from google.appengine.ext import ndb
 
@@ -26,10 +27,22 @@ class BaseHandler(tornado.web.RequestHandler):
         data.update(kwargs)
         self.redirect(self.request.path + '?' + urllib.urlencode(data))
 
+    @staticmethod
+    def send_welcome_email(user):
+        template = models.WelcomeEmail.get_by_id('welcome_email')
+        donation_link = 'http://donate.triplecrownforheart.com' + user.href
+        email = template.text.format(
+            donation_link=donation_link,
+            edit_link=donation_link + '/edit?token=' + user.edit_token)
+        mail.send_mail(sender='TripleCrownForHeart <triplecrownforheart@gmail.com>',
+            to=user.email,
+            subject='Welcome to Triple Crown for Heart',
+            body=email)
+
 
 class Index(BaseHandler):
     def get(self):
-        self.render('index.html', users=models.User.users_by_raised())
+        self.render('index.html', users=models.User.fetch_users(sort='raised'))
 
 
 class Register(BaseHandler):
@@ -49,7 +62,7 @@ class Register(BaseHandler):
             email=self.get_argument('email'),
             phone=self.get_argument('phone'),
             emergency_contact=self.get_argument('emergency_contact'),
-            emergency_contact_phone = self.get_argument('emergency_contact_phone'),
+            emergency_contact_phone=self.get_argument('emergency_contact_phone'),
             guardian=self.get_argument('guardian', None),
             birth_date=birth_date,
             experience=self.get_argument('experience'),
@@ -66,21 +79,23 @@ class Register(BaseHandler):
             province=self.get_argument('province', None),
             postal_code=self.get_argument('postal_code', None),
             registration_type=self.get_argument('registration_type', None))
+        user.set_edit_token()
         user.put()
+        self.send_welcome_email(user)        
         self.redirect('/register/' + str(user.key.id()))
 
 
-class Payment(BaseHandler):
+class RegisterPayment(BaseHandler):
     def get(self, id):
         user = models.User.get_by_id(int(id))
         if not user:
             raise tornado.web.HTTPError(404)
-        self.render('payment.html', user=user)
+        self.render('register_payment.html', user=user)
 
 
 class Admin(BaseHandler):
     def get(self):
-        self.render('admin.html', users=models.User.users_by_name())
+        self.render('admin.html', users=models.User.fetch_users())
 
 
 class User(BaseHandler):
@@ -88,7 +103,7 @@ class User(BaseHandler):
         user = models.User.get_by_id(int(id))
         if not user:
             raise tornado.web.HTTPError(404)
-        end_date = datetime.date(year=2012, month=7, day=28)
+        end_date = datetime.date(year=2013, month=7, day=28)
         self.render('user.html', user=user,
             donations=user.donations(),
             format_dollars=self.format_dollars,
@@ -101,18 +116,19 @@ class User(BaseHandler):
 
 
 class EditUser(BaseHandler):
-    def get(self, id=None):
-        user = models.User.get_by_id(int(id)) if id else None
+    def get(self, id):
+        user = models.User.get_by_id(int(id))
+        if not user:
+            raise tornado.web.HTTPError(404)
         token = self.get_argument('token', '')
         if not ((user and token == user.edit_token) or users.is_current_user_admin()):
             return self.redirect('/')
         self.render('user_edit.html', user=user, admin=users.is_current_user_admin())
 
-    def post(self, id=None):
-        if id:
-            user = models.User.get_by_id(int(id))
-        else:
-            user = models.User()
+    def post(self, id):
+        user = models.User.get_by_id(int(id))
+        if not user:
+            raise tornado.web.HTTPError(404)
         token = self.get_argument('token', '')
         if not (token == user.edit_token or users.is_current_user_admin()):
             return self.redirect('/')
@@ -120,16 +136,30 @@ class EditUser(BaseHandler):
         if self.get_argument('action', None) == 'remove':
             user.key.delete()
             return self.redirect('/admin')
+
         user.name = self.get_argument('name')
-        user.email = self.get_argument('email', None)
+        user.email = self.get_argument('email')
+        user.phone = self.get_argument('phone')
         user.goal = int(self.get_argument('goal', 200))
         user.title = self.get_argument('title', '')
-        user.quote = self.get_argument('quote', '')
-        user.set_edit_token()
+        user.quote = self.get_argument('quote', '')        
+        user.emergency_contact = self.get_argument('emergency_contact')
+        user.emergency_contact_phone = self.get_argument('emergency_contact_phone')
+        user.guardian = self.get_argument('guardian', None)
+        user.experience = self.get_argument('experience')
+        user.club_id = self.get_argument('club_id', None)
+        user.prev_events = self.get_argument('prev_events', None)
+        weekly_activity = self.get_argument('weekly_activity', None)
+        user.weekly_activity = int(weekly_activity) if weekly_activity else None
+        user.health_conditions = self.get_argument('health_conditions', None)
+        user.allergies = self.get_argument('allergies', None)
+        user.medication = self.get_argument('medication', None)
+        user.medical_allergies = self.get_argument('medical_allergies', None)
+        user.mountains = self.get_argument('mountains', None)
         user.put()
 
         if self.get_argument('send_email', None):
-            user.send_email()
+            self.send_welcome_email(user)
         self.redirect(user.href)
 
 
@@ -177,7 +207,11 @@ class PayPalIPN(BaseHandler):
             return
 
         if action == 'register':
-            user.registration_type
+            gross = float(data['mc_gross'])
+            assert gross == user.registration_cost()
+            user.paid = True
+            user.paypal_txn_id = data['txn_id']
+            user.put()
         elif action == 'donate':
             donation = models.Donation(
                 user=user.key,
@@ -200,11 +234,9 @@ settings = {
 app = tornado.wsgi.WSGIApplication([
     (r'/', Index),
     (r'/register', Register),
-    (r'/register/(\d+)', Payment),
+    (r'/register/(\d+)', RegisterPayment),
     (r'/admin', Admin),
     (r'/welcome_email', WelcomeEmail),
-    (r'/new_user', EditUser),
-    (r'/bulk_add_users', BulkAddUsers),
     (r'/(\d+)/.+/edit', EditUser),
     (r'/(\d+)/.+', User),
     (r'/paypal_ipn', PayPalIPN)

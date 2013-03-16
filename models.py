@@ -1,6 +1,6 @@
+import datetime
 import uuid
 
-from google.appengine.api import mail
 from google.appengine.ext import ndb
 
 
@@ -29,7 +29,7 @@ class User(ndb.Model):
     postal_code = ndb.StringProperty(indexed=False)
     paid = ndb.BooleanProperty(default=False)
     paypal_txn_id = ndb.StringProperty()
-    registration_type = ndb.StringProperty(indexed=False, choices=['adult', 'youth', 'senior'])
+    registration_type = ndb.StringProperty(indexed=False, default='adult', choices=['adult', 'youth', 'senior'])
 
     title = ndb.StringProperty()
     raised = ndb.IntegerProperty(default=0)
@@ -38,13 +38,14 @@ class User(ndb.Model):
     quote = ndb.TextProperty()
     edit_token = ndb.StringProperty()
 
-    @classmethod
-    def users_by_raised(cls):
-    	return cls.query().order(-cls.raised).fetch(1000)
+    _this_year = datetime.datetime(year=datetime.datetime.now().year, month=1, day=1)
 
     @classmethod
-    def users_by_name(cls):
-        return cls.query().order(cls.name).fetch(1000)
+    def fetch_users(cls, sort=None):
+        users = cls.query(cls.created > cls._this_year).order(cls.created).fetch()
+        if sort == 'raised':
+            users.sort(key=lambda u: u.raised, reverse=True)
+    	return users
 
     @property
     def href(self):
@@ -57,8 +58,14 @@ class User(ndb.Model):
         return '/' + str(self.key.id()) + '/' + slug
 
     def set_edit_token(self):
-        if not self.edit_token:
-            self.edit_token = str(uuid.uuid4()).replace('-', '')
+        self.edit_token = str(uuid.uuid4()).replace('-', '')
+
+    def registration_cost(self):
+        if self.registration_type == 'adult':
+            return 55
+        elif self.registration_type == 'youth':
+            return 45
+        return 35
 
     def donations(self):
         return Donation.query(Donation.user == self.key).fetch(1000)
@@ -69,17 +76,6 @@ class User(ndb.Model):
         self.raised = 0
         for donation in donations:
             self.raised += donation.amount
-
-    def send_email(self):
-        template = WelcomeEmail.get_by_id('welcome_email')
-        donation_link = 'http://donate.triplecrownforheart.com' + self.href
-        email = template.text.format(
-            donation_link=donation_link,
-            edit_link=donation_link + '/edit?token=' + self.edit_token)
-        mail.send_mail(sender='TripleCrownForHeart <triplecrownforheart@gmail.com>',
-            to=self.email,
-            subject='Welcome to Triple Crown for Heart',
-            body=email)
 
 
 class Donation(ndb.Model):

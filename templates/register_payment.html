@@ -1,9 +1,22 @@
+{% extends "base.html" %}
+
+
+{% block script %}
+    <script>
+        $(function(){
+            $('#register').submit();
+        });
+    </script>
+{% end %}
 
 
 {% block content %}
+    <div class="hero">
+        Continuing to PayPal...
+    </div>
     <form id="register" action="https://www.paypal.com/cgi-bin/webscr" method="post">
         <input type="hidden" name="cmd" value="_xclick">
-        <input type="hidden" name="return" value="http://donate.triplecrownforheart.com/register/thanks">
+        <input type="hidden" name="return" value="http://triplecrownforheart.ca/thanks">
         <input type="hidden" name="rm" value="1">
         <input type="hidden" name="cancel_return" value="http://donate.triplecrownforheart.com/register/{{ user.key.id() }}">
         <input type="hidden" name="notify_url" value="http://donate.triplecrownforheart.com/paypal_ipn">
@@ -11,5 +24,7 @@
         <input type="hidden" name="item_name" value="Triple Crown for Heart Registration">
         <input type="hidden" name="item_number" value="register:{{ user.key.id() }}">
         <input type="hidden" name="currency_code" value="CAD">
+        <input type="hidden" name="amount" value="{{ user.registration_cost() }}">
+        <input class="btn" type="submit" value="Continue to PayPal">
     </form>
 {% end %}
