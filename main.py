@@ -81,7 +81,6 @@ class Register(BaseHandler):
             registration_type=self.get_argument('registration_type', None))
         user.set_edit_token()
         user.put()
-        self.send_welcome_email(user)        
         self.redirect('/register/' + str(user.key.id()))
 
 
@@ -212,6 +211,8 @@ class PayPalIPN(BaseHandler):
             user.paid = True
             user.paypal_txn_id = data['txn_id']
             user.put()
+            self.send_welcome_email(user)
+            
         elif action == 'donate':
             donation = models.Donation(
                 user=user.key,
