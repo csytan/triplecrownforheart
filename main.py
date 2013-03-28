@@ -84,9 +84,6 @@ class Register(BaseHandler):
             registration_type=self.get_argument('registration_type', None))
         user.set_edit_token()
         user.put()
-
-        self.send_welcome_email(user)
-
         self.redirect('/register/' + str(user.key.id()))
 
 

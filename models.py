@@ -8,21 +8,12 @@ class Settings(ndb.Model):
     admin_token = ndb.StringProperty()
     welcome_email = ndb.TextProperty()
     cookie_secret = ndb.StringProperty(indexed=False)
-    
+
     @classmethod
     def get_settings(cls):
-        return cls.get_or_insert(
-            'settings',
+        return cls.get_or_insert('settings',
             admin_token=str(uuid.uuid4()).replace('-', ''),
-            cookie_secret=str(uuid.uuid4()),
-            welcome_email=WelcomeEmail.get_or_insert('welcome_email').text)
-
-    def set_admin_token(self):
-        self.admin_token = str(uuid.uuid4()).replace('-', '')
-
-
-class WelcomeEmail(ndb.Model):
-    text = ndb.TextProperty()
+            cookie_secret=str(uuid.uuid4()))
 
 
 class User(ndb.Model):
