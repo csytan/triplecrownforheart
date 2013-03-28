@@ -4,7 +4,6 @@ import os
 import urllib
 
 from google.appengine.api import mail
-from google.appengine.api import users
 from google.appengine.ext import ndb
 
 import tornado.wsgi
@@ -18,6 +17,10 @@ class BaseHandler(tornado.web.RequestHandler):
         self.get(*args, **kwargs)
         self.request.body = ''
 
+    def get_current_user(self):
+        user_id = self.get_secure_cookie('user_id')
+        return user_id == 'admin'
+
     def reload(self, copyargs=False, **kwargs):
         data = {}
         if copyargs:
@@ -29,9 +32,9 @@ class BaseHandler(tornado.web.RequestHandler):
 
     @staticmethod
     def send_welcome_email(user):
-        template = models.WelcomeEmail.get_by_id('welcome_email')
+        settings = models.Settings.get_settings()
         donation_link = 'http://donate.triplecrownforheart.com' + user.href
-        email = template.text.format(
+        email = settings.welcome_email.format(
             donation_link=donation_link,
             edit_link=donation_link + '/edit?token=' + user.edit_token)
         mail.send_mail(sender='TripleCrownForHeart <triplecrownforheart@gmail.com>',
@@ -81,6 +84,9 @@ class Register(BaseHandler):
             registration_type=self.get_argument('registration_type', None))
         user.set_edit_token()
         user.put()
+
+        self.send_welcome_email(user)
+
         self.redirect('/register/' + str(user.key.id()))
 
 
@@ -92,7 +98,19 @@ class RegisterPayment(BaseHandler):
         self.render('register_payment.html', user=user)
 
 
+class AdminLogin(BaseHandler):
+    def get(self):
+        settings = models.Settings.get_settings()
+        token = self.get_argument('token', None)
+        if token == settings.admin_token:
+            self.set_secure_cookie('user_id', 'admin')
+            self.redirect('/admin')
+        else:
+            self.redirect('/')
+
+
 class Admin(BaseHandler):
+    @tornado.web.authenticated
     def get(self):
         self.render('admin.html', users=models.User.fetch_users())
 
@@ -106,8 +124,7 @@ class User(BaseHandler):
         self.render('user.html', user=user,
             donations=user.donations(),
             format_dollars=self.format_dollars,
-            days_left=(end_date - datetime.date.today()).days,
-            admin=users.is_current_user_admin())
+            days_left=(end_date - datetime.date.today()).days)
 
     @staticmethod
     def format_dollars(amount):
@@ -120,16 +137,16 @@ class EditUser(BaseHandler):
         if not user:
             raise tornado.web.HTTPError(404)
         token = self.get_argument('token', '')
-        if not ((user and token == user.edit_token) or users.is_current_user_admin()):
+        if not ((user and token == user.edit_token) or self.current_user):
             return self.redirect('/')
-        self.render('user_edit.html', user=user, admin=users.is_current_user_admin())
+        self.render('user_edit.html', user=user)
 
     def post(self, id):
         user = models.User.get_by_id(int(id))
         if not user:
             raise tornado.web.HTTPError(404)
         token = self.get_argument('token', '')
-        if not (token == user.edit_token or users.is_current_user_admin()):
+        if not (token == user.edit_token or self.current_user):
             return self.redirect('/')
 
         if self.get_argument('action', None) == 'remove':
@@ -163,14 +180,16 @@ class EditUser(BaseHandler):
 
 
 class WelcomeEmail(BaseHandler):
+    @tornado.web.authenticated
     def get(self):
-        email = models.WelcomeEmail.get_or_insert('welcome_email')
-        self.render('welcome_email.html', email=email)
+        settings = models.Settings.get_settings()
+        self.render('welcome_email.html', email=settings.welcome_email)
 
+    @tornado.web.authenticated
     def post(self):
-        email = models.WelcomeEmail.get_or_insert('welcome_email')
-        email.text = self.get_argument('text', '')
-        email.put()
+        settings = models.Settings.get_settings()
+        settings.welcome_email = self.get_argument('text', '')
+        settings.put()
         self.redirect('/welcome_email?message=updated')
 
 
@@ -230,10 +249,13 @@ class PayPalIPN(BaseHandler):
 
 settings = {
     'template_path': os.path.join(os.path.dirname(__file__), 'templates'),
-    'debug': os.environ['SERVER_SOFTWARE'].startswith('Dev')
+    'debug': os.environ['SERVER_SOFTWARE'].startswith('Dev'),
+    'login_url': '/admin_login',
+    'cookie_secret': models.Settings.get_settings().cookie_secret
 }
 app = tornado.wsgi.WSGIApplication([
     (r'/', Index),
+    (r'/admin_login', AdminLogin),
     (r'/register', Register),
     (r'/register/(\d+)', RegisterPayment),
     (r'/admin', Admin),

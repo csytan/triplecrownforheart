@@ -173,7 +173,7 @@
 
 
 {% block content %}
-	{% if admin %}
+	{% if current_user %}
 		<div id="admin_links">
 			<a href="{{ user.href }}/edit?token={{ user.edit_token }}" class="btn btn-large btn-success pull-right">Edit Profile</a>
 			<a href="/admin" class="btn btn-large pull-right">

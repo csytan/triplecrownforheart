@@ -4,6 +4,26 @@ import uuid
 from google.appengine.ext import ndb
 
 
+class Settings(ndb.Model):
+    admin_token = ndb.StringProperty()
+    welcome_email = ndb.TextProperty()
+    cookie_secret = ndb.StringProperty(indexed=False)
+    
+    @classmethod
+    def get_settings(cls):
+        return cls.get_or_insert(
+            'settings',
+            admin_token=str(uuid.uuid4()).replace('-', ''),
+            cookie_secret=str(uuid.uuid4()),
+            welcome_email=WelcomeEmail.get_or_insert('welcome_email').text)
+
+    def set_admin_token(self):
+        self.admin_token = str(uuid.uuid4()).replace('-', '')
+
+
+class WelcomeEmail(ndb.Model):
+    text = ndb.TextProperty()
+
 
 class User(ndb.Model):
     created = ndb.DateTimeProperty(auto_now_add=True)
@@ -86,9 +106,5 @@ class Donation(ndb.Model):
     amount = ndb.IntegerProperty(default=0)
     status = ndb.StringProperty(indexed=False)
     data = ndb.TextProperty()
-
-
-class WelcomeEmail(ndb.Model):
-    text = ndb.TextProperty()
 
 

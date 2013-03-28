@@ -221,7 +221,7 @@
         <div class="form-actions">
             {% if user %}
                 <input type="submit" class="btn btn-success" value="Save Changes">
-                {% if admin %}
+                {% if current_user %}
                     <input type="submit" class="btn btn-warning" value="Remove User">
                 {% end %}
             {% else %}
