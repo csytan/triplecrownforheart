@@ -1,5 +1,6 @@
 import datetime
 import json
+import logging
 import os
 import urllib
 
@@ -203,24 +204,21 @@ class PayPalIPN(BaseHandler):
         response = urllib.urlopen(
             'https://www.paypal.com/cgi-bin/webscr', 
             urllib.urlencode(data)).read()
-        
+        logging.debug(response + '\n\n' + str(data))
+
         if response == 'VERIFIED':
             if data.get('txn_type') == 'web_accept':
                 return self.web_accept(data)
-        else:
-            logging.error(response + ':' + str(data))
         self.write('1')
         
     def web_accept(self, data):
-        if data['mc_currency'] != 'CAD' or \
-            data['receiver_email'] != 'triplecrownforheart@gmail.com':
-            return
+        assert data['mc_currency'] == 'CAD'
+        assert data['receiver_email'] == 'triplecrownforheart@gmail.com'
 
         action, user_id = data['item_number'].split(':')
         user = models.User.get_by_id(int(user_id))
-        if not user:
-            return
-
+        assert user
+        
         if action == 'register':
             gross = float(data['mc_gross'])
             assert gross == user.registration_cost()
