@@ -7,8 +7,19 @@
 
 {% block style %}
 	<style>
+		h2 {
+			font-size: 25px;
+			line-height: 1.2em;
+		}
+		h3 {
+			font-size: 18px;
+			line-height: 1;
+			margin: 0;
+			margin-bottom: 10px;
+		}
+
 		#stats {
-			margin-bottom: 15px;
+			margin-bottom: 35px;
 		}
 		#stats .progress_bar {
 			float: left;
@@ -34,16 +45,32 @@
 			width: 330px;
 		}
 		#stats .total {
-			margin-bottom: 15px;
+			font-size: 45px;
+			font-weight: bold;
+			margin-top: 5px;
+			margin-bottom: 10px;
+			line-height: 1;
 		}
 		#stats .support {
 			float: left;
 			width: 45%;
 		}
+		#stats .num {
+			font-size: 25px;
+			font-weight: bold;
+			margin-bottom: 5px;
+			margin-top: 15px;
+		}
+		#stats .caps {
+			font-size: 16px;
+			font-weight: bold;
+			text-transform: uppercase;
+			margin-bottom: 5px;
+		}
 		#stats .donate {
-			float: left;
+			float: right;
 			width: 170px;
-			margin-top: 45px;
+			margin-top: 30px;
 		}
 		#stats .donate .btn {
 			margin-left: 8px;
@@ -59,20 +86,11 @@
 			color: #666;
 			font-weight: bold;
 		}
-		#stats h2 {
-			font-size: 3em;
-			margin-bottom: 10px;
-		}
 		#stats h3 {
-			font-size: 2.4em;
+			font-size: 25px;
+			margin: 0;
 			margin-bottom: 5px;
-		}
-		#stats strong {
-			font-size: 1.2em;
-			text-transform: uppercase;
-		}
-		#stats .donate {
-			float: right;
+			line-height: 1em;
 		}
 
 		blockquote { 
@@ -87,7 +105,7 @@
 		    position: absolute;
 		    font-size: 300%; 
 		    color: #ccc; 
-		    font-family: Futura;
+		    font-family: Futura, Tahoma, Helvetica, Arial;
 		}
 		blockquote:before { 
 		    content: open-quote;
@@ -108,7 +126,6 @@
 			float: left;
 		}
 		.donation .total {
-			padding-top: 5px;
 			font-size: 1.5em;
 			text-align: center;
 			width: 20%;
@@ -124,7 +141,7 @@
 
 		.page-header {
 			padding-bottom: 0;
-			margin-top: 10px;
+			margin-top: 0;
 		}
 		.page-header h1 {
 			font-size: 35px;
@@ -201,18 +218,13 @@
 			<div class="bar"></div>
 		</div>
 		<div class="raised">
-			<div class="total">
-				<h2>{{ format_dollars(user.raised) }}</h2>
-				<strong>raised of {{ format_dollars(user.goal) }} goal</strong>
-			</div>
-			<div style="clear:both"></div>
+			<div class="total">{{ format_dollars(user.raised) }}</div>
+			<div class="caps">raised of {{ format_dollars(user.goal) }} goal</div>
 			<div class="support">
-				<h3>{{ user.n_donations }}</h3>
-				<strong>donations</strong>
-				<br>
-				<br>
-				<h3>{{ days_left }}</h3>
-				<strong>days left</strong>
+				<div class="num">{{ user.n_donations }}</div>
+				<div class="caps">donations</div>
+				<div class="num">{{ days_left }}</div>
+				<div class="caps">days left</div>
 			</div>
 			<div class="donate">
 				<a class="btn btn-large btn-success" data-toggle="modal" href="#donate">
