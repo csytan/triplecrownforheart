@@ -46,7 +46,9 @@ class BaseHandler(tornado.web.RequestHandler):
 
 class Index(BaseHandler):
     def get(self):
-        self.render('index.html', users=models.User.fetch_users(sort='raised'))
+        users = models.User.fetch_users(sort='raised')
+        users = [u for u in users if u.paid]
+        self.render('index.html', users=users)
 
 
 class Register(BaseHandler):
@@ -110,7 +112,10 @@ class AdminLogin(BaseHandler):
 class Admin(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        self.render('admin.html', users=models.User.fetch_users())
+        users = models.User.fetch_users()
+        unpaid = [u for u in users if not u.paid]
+        users = [u for u in users if u.paid]
+        self.render('admin.html', users=users, unpaid=unpaid)
 
 
 class User(BaseHandler):
