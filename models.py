@@ -40,7 +40,7 @@ class User(ndb.Model):
     postal_code = ndb.StringProperty(indexed=False)
     paid = ndb.BooleanProperty(default=False)
     paypal_txn_id = ndb.StringProperty()
-    registration_type = ndb.StringProperty(indexed=False, default='adult', choices=['adult', 'youth', 'senior'])
+    registration_type = ndb.StringProperty(indexed=False, default='adult', choices=['adult', 'student', 'senior'])
 
     title = ndb.StringProperty()
     raised = ndb.IntegerProperty(default=0)
@@ -52,7 +52,7 @@ class User(ndb.Model):
     _this_year = datetime.datetime(year=datetime.datetime.now().year, month=1, day=1)
 
     @classmethod
-    def fetch_users(cls, sort=None):
+    def fetch_users(cls, sort=None, paid=False):
         users = cls.query(cls.created > cls._this_year).order(cls.created).fetch()
         if sort == 'raised':
             users.sort(key=lambda u: u.raised, reverse=True)
