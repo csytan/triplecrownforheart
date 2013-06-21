@@ -42,6 +42,10 @@ class User(ndb.Model):
     paypal_txn_id = ndb.StringProperty()
     registration_type = ndb.StringProperty(indexed=False, default='adult', choices=['adult', 'student', 'senior'])
 
+    order_jersey = ndb.BooleanProperty(indexed=False, default=False)
+    gender = ndb.StringProperty(indexed=False, choices=['male', 'female'])
+    jersey_size = ndb.StringProperty(indexed=False, choices=['XS', 'S', 'M', 'L', 'XL', 'XXL'])
+
     title = ndb.StringProperty()
     raised = ndb.IntegerProperty(default=0)
     goal = ndb.IntegerProperty(default=200)
@@ -73,10 +77,14 @@ class User(ndb.Model):
 
     def registration_cost(self):
         if self.registration_type == 'adult':
-            return 55
+            cost = 55
         elif self.registration_type == 'youth':
-            return 45
-        return 35
+            cost = 45
+        else:
+            cost = 35
+        if self.order_jersey:
+            cost += 70
+        return cost
 
     def donations(self):
         return Donation.query(Donation.user == self.key).fetch(1000)

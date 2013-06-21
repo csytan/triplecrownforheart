@@ -84,7 +84,10 @@ class Register(BaseHandler):
             city=self.get_argument('city', None),
             province=self.get_argument('province', None),
             postal_code=self.get_argument('postal_code', None),
-            registration_type=self.get_argument('registration_type', None))
+            registration_type=self.get_argument('registration_type', None),
+            order_jersey=bool(self.get_argument('order_jersey', None)),
+            gender=self.get_argument('gender', None),
+            jersey_size=self.get_argument('jersey_size', None))
         user.set_edit_token()
         user.put()
         self.redirect('/register/' + str(user.key.id()))
