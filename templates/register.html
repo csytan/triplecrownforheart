@@ -16,18 +16,9 @@
 
 
 {% block script %}
-    <link rel="stylesheet" href="/static/jquery-ui/jquery-ui-1.10.3.custom.min.css">
-    <script src="/static/jquery-ui/jquery-ui-1.10.3.custom.min.js"></script>
     <script src="/static/jquery-validation/jquery.validate.js"></script>
     <script>
         $(function(){
-            $('#birthdate').datepicker({
-                changeMonth: true,
-                changeYear: true,
-                yearRange: '1920:2000',
-                dateFormat: 'yy-mm-dd'
-            });
-
             $('#registration').validate({
                 onfocusout: function(element){
                     $(element).valid();
@@ -174,7 +165,7 @@
         <div class="control-group">
             <label class="control-label">Birthdate (yyyy-mm-dd) *</label>
             <div class="controls">
-                <input id="birthdate" class="required date" type="text" name="birth_date" placeholder="yyyy-mm-dd">
+                <input id="birthdate" class="required" type="text" name="birth_date" placeholder="yyyy-mm-dd">
             </div>
         </div>
         <div class="control-group">

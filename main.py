@@ -56,8 +56,6 @@ class Register(BaseHandler):
         self.render('register.html')
 
     def post(self):
-        birth_date = self.get_argument('birth_date')
-        birth_date = datetime.datetime.strptime(birth_date, '%Y-%m-%d')
         weekly_activity = self.get_argument('weekly_activity', None)
 
         if not self.get_argument('waiver', None):
@@ -70,7 +68,7 @@ class Register(BaseHandler):
             emergency_contact=self.get_argument('emergency_contact'),
             emergency_contact_phone=self.get_argument('emergency_contact_phone'),
             guardian=self.get_argument('guardian', None),
-            birth_date=birth_date,
+            birth_date=self.get_argument('birth_date'),
             experience=self.get_argument('experience'),
             club_id=self.get_argument('club_id', None),
             prev_events=self.get_argument('prev_events', None),
