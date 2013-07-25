@@ -157,6 +157,9 @@ class EditUser(BaseHandler):
             user.key.delete()
             return self.redirect('/admin')
 
+        if self.get_argument('set_payment_received', None) and self.current_user:
+            user.paid = True
+
         user.name = self.get_argument('name')
         user.email = self.get_argument('email')
         user.phone = self.get_argument('phone')
@@ -202,19 +205,20 @@ class PayPalIPN(BaseHandler):
         """Disables XSRF token check"""
 
     def post(self):
-        data = {}
-        for arg in self.request.arguments:
-            data[arg] = self.get_argument(arg)
-        data['cmd'] = '_notify-validate'
+        data = {'cmd': '_notify-validate'}
+        for arg, val in self.request.arguments.items():
+            data[arg] = val[0]
+        logging.debug(str(data))
         
         response = urllib.urlopen(
             'https://www.paypal.com/cgi-bin/webscr', 
             urllib.urlencode(data)).read()
-        logging.debug(response + '\n\n' + str(data))
-
+        
         if response == 'VERIFIED':
             if data.get('txn_type') == 'web_accept':
                 return self.web_accept(data)
+        else:
+            logging.error(response)
         self.write('1')
         
     def web_accept(self, data):

@@ -202,7 +202,9 @@
 	<div class="page-header">
 		<h1>
 			{{ user.name }}
-			<small>{{ user.title }}</small>
+			<small>
+				{{ user.title if user.title else 'Participant' }}
+			</small>
 		</h1>
 		<iframe id="fb_like" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fdonate.triplecrownforheart.com{{ url_escape(user.href) }}&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowTransparency="true"></iframe>
 	</div>
@@ -300,7 +302,9 @@
 			<div class="total">${{ donation.amount }}</div>
 			<div class="donor">
 				<h3>{{ donation.donor_name }}</h3>
-				<p>{{ donation.donor_comment }}</p>
+				{% if donation.donor_comment %}
+					<p>{{ donation.donor_comment }}</p>
+				{% end %}
 			</div>
 			<div style="clear:both"></div>
 		</div>

@@ -70,12 +70,15 @@
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label">Payment Received</label>
+            <label class="control-label">Payment</label>
             <div class="controls">
                 {% if user.paid %}
-                    Yes: {{ user.paypal_txn_id }}
+                    Received: {{ user.paypal_txn_id }}
                 {% else %}
-                    No
+                    Not received. 
+                    {% if current_user %}
+                        Set as received <input type="checkbox" name="set_payment_received" value="1">
+                    {% end %}
                 {% end %}
             </div>
         </div>
