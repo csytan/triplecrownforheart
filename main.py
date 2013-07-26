@@ -130,6 +130,20 @@ class User(BaseHandler):
             format_dollars=self.format_dollars,
             days_left=(end_date - datetime.date.today()).days)
 
+    def post(self, id=None):
+        user = models.User.get_by_id(int(id))
+        if not user:
+            raise tornado.web.HTTPError(404)
+        donation = models.Donation(
+            user=user.key,
+            donor_name=self.get_argument('donor_name'),
+            donor_comment=self.get_argument('donor_comment'),
+            amount=int(self.get_argument('amount')))
+        donation.put()
+        user.update_raised()
+        user.put()
+        self.reload()
+
     @staticmethod
     def format_dollars(amount):
         return '${:,d}'.format(amount)
@@ -213,7 +227,7 @@ class PayPalIPN(BaseHandler):
         response = urllib.urlopen(
             'https://www.paypal.com/cgi-bin/webscr', 
             urllib.urlencode(data)).read()
-        
+
         if response == 'VERIFIED':
             if data.get('txn_type') == 'web_accept':
                 return self.web_accept(data)
@@ -246,7 +260,7 @@ class PayPalIPN(BaseHandler):
                 donor_comment=data.get('custom', ''),
                 amount=int(float(data['mc_gross'])),
                 status=data['payment_status'],
-                data=json.dumps(data))
+                data=str(data))
             donation.put()
             user.update_raised()
             user.put()

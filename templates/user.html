@@ -297,6 +297,32 @@
 		</div>
 	{% end %}
 
+	{% if current_user %}
+		<h3>Manually Add Donation</h3>
+		<form action="" method="post">
+        	<input type="hidden" name="action" value="donate">
+        	<div class="control-group">
+                <label class="control-label">Donor Name</label>
+                <div class="controls">
+                    <input name="donor_name" placeholder="John Doe">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Donation Amount (in dollars)</label>
+                <div class="controls">
+                    <input name="amount" placeholder="50" type="text">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Comment (publically displayed on the donation page)</label>
+                <div class="controls">
+                    <textarea name="donor_comment" class="span4" rows="4" placeholder="Good luck on your ride!"></textarea>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-success" value="Add Donation">
+	    </form>
+    {% end %}
+
 	{% for donation in donations %}
 		<div class="donation">
 			<div class="total">${{ donation.amount }}</div>
