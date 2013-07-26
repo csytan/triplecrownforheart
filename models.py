@@ -78,11 +78,11 @@ class User(ndb.Model):
 
     def registration_cost(self):
         if self.registration_type == 'adult':
-            cost = 55
+            cost = 65
         elif self.registration_type == 'youth':
-            cost = 45
+            cost = 55
         else:
-            cost = 35
+            cost = 45
         if self.order_jersey:
             cost += 70
         return cost
