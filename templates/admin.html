@@ -17,6 +17,9 @@
             color: #777;
             margin-left: 5px;
         }
+        .users strong {
+            font-size: 17px;
+        }
         .users td.user {
             width: 90%;
         }
@@ -55,6 +58,9 @@
                 <td class="user">
                     <a href="{{ user.href }}">{{ i + 1 }}. {{ user.name }}</a>
                     <small>{{ locale.format_date(user.created, shorter=True) }}</small>
+                    {% if user.order_jersey %}
+                        <strong>{{ user.gender.capitalize() }} ({{ user.jersey_size }})</strong>
+                    {% end %}
                 </td>
                 <td class="edit">
                     <a href="{{ user.href }}/edit?token={{ user.edit_token }}">Edit</a>

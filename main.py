@@ -45,15 +45,27 @@ class BaseHandler(tornado.web.RequestHandler):
 
 
 class Index(BaseHandler):
+    _cache = None
+    _cache_time = None
     def get(self):
-        users = models.User.fetch_users(sort='raised')
-        users = [u for u in users if u.paid]
+        now = datetime.datetime.now()
+        if self._cache_time and (now - self._cache_time).seconds < 600:
+            users = self._cache
+        else:
+            self._cache_time = now
+            users = models.User.fetch_users(sort='raised')
+            users = [u for u in users if u.paid]
+            self._cache = users
         self.render('index.html', users=users)
 
 
 class Register(BaseHandler):
     def get(self):
-        self.render('register.html')
+        settings = models.Settings.get_settings()
+        if settings.registration_open:
+            self.render('register.html')
+        else:
+            self.render('registration_closed.html')
 
     def post(self):
         weekly_activity = self.get_argument('weekly_activity', None)

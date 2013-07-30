@@ -7,6 +7,7 @@ from google.appengine.ext import ndb
 class Settings(ndb.Model):
     admin_token = ndb.StringProperty()
     welcome_email = ndb.TextProperty()
+    registration_open = ndb.BooleanProperty(default=True)
     cookie_secret = ndb.StringProperty(indexed=False)
 
     @classmethod
@@ -79,7 +80,7 @@ class User(ndb.Model):
     def registration_cost(self):
         if self.registration_type == 'adult':
             cost = 65
-        elif self.registration_type == 'youth':
+        elif self.registration_type == 'student':
             cost = 55
         else:
             cost = 45
