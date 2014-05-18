@@ -42,9 +42,9 @@
         <h1>Registration <small>Triple Crown For Heart</small></h1>
     </div>
     <div class="well">
-        Please <a href="/static/waiver.pdf" target="_blank">fill in the waiver</a> and provide it to the Triple Crown Event Coordinators on the day of the ride, July 27th, 2013.
+        Please <a href="/static/waiver.pdf" target="_blank">fill in the waiver</a> and provide it to the Triple Crown Event Coordinators on the day of the ride, July 19, 2014.
         <br><br>
-        You must sign a <a href="/static/waiver.pdf" target="_blank">waiver</a> to ride.  You must have your own insurance and emergency contact information with you when you ride.
+        You must have your own insurance and emergency contact information with you when you ride.
         <br><br>
         At present those under the age of 16 are not permitted to enter this event due to the physical requirements for this ride.
     </div>
@@ -55,15 +55,15 @@
             <div class="controls">
                 <label class="radio">
                     <input type="radio" name="registration_type" value="adult" checked>
-                    $65 - Adult
+                    $60 - Adult
                 </label>
                 <label class="radio">
                     <input type="radio" name="registration_type" value="student">
-                    $55 - Student 
+                    $50 - Student 
                 </label>
                 <label class="radio">
                     <input type="radio" name="registration_type" value="senior">
-                    $45 - Senior (65 and older)
+                    $40 - Senior (65 and older)
                 </label>
             </div>
         </div>
@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <legend>Address</legend>
+        <legend>Mailing Address</legend>
         <div class="control-group">
             <label class="control-label">Street *</label>
             <div class="controls">
@@ -112,9 +112,41 @@
             </div>
         </div>
 
+        <legend>Health &amp; Medical</legend>
+        <div class="control-group">
+            <label class="control-label">Emergency Contact *</label>
+            <div class="controls">
+                <input class="required" type="text" name="emergency_contact" placeholder="Jane Doe">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Emergency Phone *</label>
+            <div class="controls">
+                <input class="required" type="text" name="emergency_contact_phone" placeholder="555-555-5555">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Birthdate (yyyy-mm-dd) *</label>
+            <div class="controls">
+                <input id="birthdate" class="required" type="text" name="birth_date" placeholder="yyyy-mm-dd">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Guardian (if under 18 years)</label>
+            <div class="controls">
+                <input type="text" name="guardian">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Do you have any health conditions or allergies?</label>
+            <div class="controls">
+                <input type="text" name="health_conditions">
+            </div>
+        </div>
+
         <legend>Jersey (optional)</legend>
         <div class="well">
-            Get your official 2013 Triple Crown for Heart jersey, and show people what you’ve done. Cost is an additional $70.
+            Get your official Triple Crown for Heart jersey, and show people what you’ve done. Cost is an additional $70.
             <a href="http://triplecrownforheart.ca/jersey-purchase/" target="_blank">Sizing and details</a>.
         </div>
         <div class="control-group">
@@ -149,63 +181,7 @@
             </div>
         </div>
 
-        <legend>Health &amp; Medical</legend>
-        <div class="control-group">
-            <label class="control-label">Emergency Contact *</label>
-            <div class="controls">
-                <input class="required" type="text" name="emergency_contact" placeholder="Jane Doe">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Emergency Phone *</label>
-            <div class="controls">
-                <input class="required" type="text" name="emergency_contact_phone" placeholder="555-555-5555">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Birthdate (yyyy-mm-dd) *</label>
-            <div class="controls">
-                <input id="birthdate" class="required" type="text" name="birth_date" placeholder="yyyy-mm-dd">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Guardian (if under 18 years)</label>
-            <div class="controls">
-                <input type="text" name="guardian">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">How many times do you exercise each week?</label>
-            <div class="controls">
-                <input class="digits" type="number" name="weekly_activity" placeholder="3">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Do you have any health conditions?</label>
-            <div class="controls">
-                <input type="text" name="health_conditions">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Do you have any allergies?</label>
-            <div class="controls">
-                <input type="text" name="allergies" placeholder="e.g. insect bites, nuts">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Are you taking any medication?</label>
-            <div class="controls">
-                <input type="text" name="medication">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Are you allergic to any medication?</label>
-            <div class="controls">
-                <input type="text" name="medical_allergies" placeholder="e.g. penicillin">
-            </div>
-        </div>
-
-        <legend>Cycling Info</legend>
+        <legend>Cycling Info (optional)</legend>
         <div class="control-group">
             <label class="control-label">I chose to cycle</label>
             <div class="controls">

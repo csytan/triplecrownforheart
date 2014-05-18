@@ -32,9 +32,6 @@ class User(ndb.Model):
     prev_events = ndb.StringProperty(indexed=False)
     weekly_activity = ndb.IntegerProperty(indexed=False)
     health_conditions = ndb.StringProperty(indexed=False)
-    allergies = ndb.StringProperty(indexed=False)
-    medication = ndb.StringProperty(indexed=False)
-    medical_allergies = ndb.StringProperty(indexed=False)
     mountains = ndb.StringProperty(indexed=False, choices=['all', 'cypress', 'seymour', 'grouse'])
     street = ndb.StringProperty(indexed=False)
     city = ndb.StringProperty(indexed=False)
@@ -79,11 +76,11 @@ class User(ndb.Model):
 
     def registration_cost(self):
         if self.registration_type == 'adult':
-            cost = 65
+            cost = 60
         elif self.registration_type == 'student':
-            cost = 55
+            cost = 50
         else:
-            cost = 45
+            cost = 40
         if self.order_jersey:
             cost += 70
         return cost

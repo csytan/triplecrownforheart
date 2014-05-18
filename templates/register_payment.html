@@ -12,7 +12,7 @@
 
 {% block content %}
     <div class="hero">
-        Continuing to PayPal...
+        Please wait. Continuing to PayPal...
     </div>
     <form id="register" action="https://www.paypal.com/cgi-bin/webscr" method="post">
         <input type="hidden" name="cmd" value="_xclick">
@@ -20,7 +20,7 @@
         <input type="hidden" name="rm" value="1">
         <input type="hidden" name="cancel_return" value="http://donate.triplecrownforheart.com/register/{{ user.key.id() }}">
         <input type="hidden" name="notify_url" value="http://donate.triplecrownforheart.com/paypal_ipn">
-        <input type="hidden" name="business" value="triplecrownforheart@gmail.com">
+        <input type="hidden" name="business" value="stephen@triplecrownforheart.com">
         <input type="hidden" name="item_name" value="Triple Crown for Heart Registration {% if user.order_jersey %}&amp; Jersey ({{ user.gender }}): {{ user.jersey_size }}{% end %}">
         <input type="hidden" name="item_number" value="register:{{ user.key.id() }}">
         <input type="hidden" name="currency_code" value="CAD">

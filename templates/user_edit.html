@@ -83,27 +83,7 @@
             </div>
         </div>
 
-        <legend>Donation Page</legend>
-        <div class="control-group">
-            <label class="control-label">Goal $</label>
-            <div class="controls">
-                <input type="text" name="goal" placeholder="200" value="{{ user.goal }}">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Title (optional)</label>
-            <div class="controls">
-                <input type="text" name="title" value="{{ user.title or 'Participant' }}">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Quote (optional)</label>
-            <div class="controls">
-                <input type="text" name="quote" placeholder="" value="{{ user.quote or '' }}">
-            </div>
-        </div>
-
-        <legend>Address</legend>
+        <legend>Mailing Address</legend>
         <div class="control-group">
             <label class="control-label">Street</label>
             <div class="controls">
@@ -163,29 +143,31 @@
         <div class="control-group">
             <label class="control-label">Do you have any health conditions?</label>
             <div class="controls">
-                <input type="text" name="health_conditions" value="{{ user.health_conditions }}">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Do you have any allergies?</label>
-            <div class="controls">
-                <input type="text" name="allergies" placeholder="e.g. insect bites, nuts" value="{{ user.allergies }}">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Are you taking any medication?</label>
-            <div class="controls">
-                <input type="text" name="medication" value="{{ user.medication }}">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Are you allergic to any medication?</label>
-            <div class="controls">
-                <input type="text" name="medical_allergies" placeholder="e.g. penicillin" value="{{ user.medical_allergies }}">
+                <textarea name="health_conditions">{{ user.health_conditions }}"</textarea>
             </div>
         </div>
 
-        <legend>Cycling Info</legend>
+        <legend>Donation Page (optional)</legend>
+        <div class="control-group">
+            <label class="control-label">Goal $</label>
+            <div class="controls">
+                <input type="text" name="goal" placeholder="200" value="{{ user.goal }}">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Title (optional)</label>
+            <div class="controls">
+                <input type="text" name="title" value="{{ user.title or 'Participant' }}">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Quote (optional)</label>
+            <div class="controls">
+                <input type="text" name="quote" placeholder="" value="{{ user.quote or '' }}">
+            </div>
+        </div>
+
+        <legend>Cycling Info (optional)</legend>
         <div class="control-group">
             <label class="control-label">I chose to cycle</label>
             <div class="controls">

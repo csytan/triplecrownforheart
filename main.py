@@ -86,9 +86,6 @@ class Register(BaseHandler):
             prev_events=self.get_argument('prev_events', None),
             weekly_activity=int(weekly_activity) if weekly_activity else None,
             health_conditions=self.get_argument('health_conditions', None),
-            allergies=self.get_argument('allergies', None),
-            medication=self.get_argument('medication', None),
-            medical_allergies=self.get_argument('medical_allergies', None),
             mountains=self.get_argument('mountains', None),
             street=self.get_argument('street', None),
             city=self.get_argument('city', None),
@@ -136,7 +133,7 @@ class User(BaseHandler):
         user = models.User.get_by_id(int(id))
         if not user:
             raise tornado.web.HTTPError(404)
-        end_date = datetime.date(year=2013, month=7, day=28)
+        end_date = datetime.date(year=2014, month=7, day=19)
         self.render('user.html', user=user,
             donations=user.donations(),
             format_dollars=self.format_dollars,
@@ -249,8 +246,8 @@ class PayPalIPN(BaseHandler):
         
     def web_accept(self, data):
         assert data['mc_currency'] == 'CAD'
-        assert data['receiver_email'] == 'triplecrownforheart@gmail.com'
-
+        assert data['receiver_email'] == 'stephen@triplecrownforheart.com'
+        
         action, user_id = data['item_number'].split(':')
         user = models.User.get_by_id(int(user_id))
         assert user
