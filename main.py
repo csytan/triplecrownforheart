@@ -246,7 +246,7 @@ class PayPalIPN(BaseHandler):
         
     def web_accept(self, data):
         assert data['mc_currency'] == 'CAD'
-        assert data['receiver_email'] == 'stephen@triplecrownforheart.com'
+        assert data['receiver_email'] in ('stephen@triplecrownforheart.com', 'triplecrownforheart@gmail.com')
         
         action, user_id = data['item_number'].split(':')
         user = models.User.get_by_id(int(user_id))
