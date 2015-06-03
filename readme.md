@@ -1,12 +1,22 @@
 # Triple Crown for Heart - Donation Pages
 
+
+## Setup
+
+Create a file named **secrets.py** and fill in your API credentials:
+```
+wufoo_api_key = ''
+paypal_api_username = ''
+paypal_api_password	= ''
+paypal_api_signature = ''
+```
+
+
 To run
 ```
 pip3 install requests
 python3 run.py
 ```
-
-
 
 
 
