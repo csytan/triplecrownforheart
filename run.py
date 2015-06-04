@@ -1,10 +1,19 @@
 import hashlib
 import json
+import pprint
 import re
 import requests
 import urllib
 
 import secrets
+
+
+def hash_id(secret):
+    """
+    Hashes IDs like emails and paypal transaction ids to keep them (somewhat) private
+    """
+    salt = '1a2a3a4a5a6a7a8a9a'
+    return hashlib.sha256(secret + salt).hexdigest()[:10]
 
 
 def wufoo_get_entries():
@@ -34,9 +43,8 @@ def get_riders():
         rider_name = (entry['Field5'].capitalize() + ' ' + 
             entry['Field6'].capitalize())
         rider_email = entry['Field7'].strip().encode('utf8')
-        rider_id = hashlib.sha256(rider_email).hexdigest()[:10]
         riders.append({
-            'id': rider_id,
+            'id': hash_id(rider_email),
             'name': rider_name
         })
     return riders
@@ -61,9 +69,9 @@ def paypal_transactionsearch():
     https://developer.paypal.com/webapps/developer/docs/classic/api/merchant/TransactionSearch_API_Operation_NVP/
     """
     results = paypal_nvp(
-        METHOD='TransactionSearch', STARTDATE='2015-01-01T00:00:00Z')
+        METHOD='TransactionSearch', STARTDATE='2014-01-01T00:00:00Z')
     
-    # Group data by transaction
+    # Group attributes by transaction
     transactions = {}
     for key, value in results:
         # Example: "L_NETAMT12"
@@ -74,15 +82,29 @@ def paypal_transactionsearch():
         attr, num = re.findall('(\D+)(\d+)$', key)[0]
         txn = transactions.setdefault(num, {})
         txn[attr] = value
-    return transactions.values()
+    return list(transactions.values())
     
 
+def paypal_transactiondetails(txn_id):
+    """
+    https://developer.paypal.com/webapps/developer/docs/classic/api/merchant/GetTransactionDetails_API_Operation_NVP/
+    """
+    results = paypal_nvp(
+        METHOD='GetTransactionDetails', TRANSACTIONID=txn_id)
+    return dict(results)
 
 
+def get_donations():
+    transactions = paypal_transactionsearch()
+    donation_ids = [
+        txn['L_TRANSACTIONID'] for txn in transactions 
+        if txn['L_TYPE'] == 'Donation']
+    return donation_ids
 
-import pprint
-pp = pprint.PrettyPrinter(indent=4)
 
-#pp.pprint(get_riders())
-pp.pprint(paypal_transactionsearch())
-
+if __name__ == '__main__':
+    pp = pprint.PrettyPrinter(indent=4)
+    #pp.pprint(get_riders())
+    #pp.pprint(paypal_transactionsearch())
+    #pp.pprint(paypal_transactiondetails())
+    pp.pprint(get_donations())

@@ -12,12 +12,15 @@ paypal_api_signature = ''
 ```
 
 
-To run
+Install dependencies
 ```
 pip3 install requests
-python3 run.py
 ```
 
+To run
+```
+python3 run.py
+```
 
 
 ## Media
@@ -25,11 +28,11 @@ python3 run.py
 - http://triplecrownforheart.ca/gallery/
 
 
-## Implementation
-- Donation page is hosted on Github Pages
-- Data is contained within a JSON file
-- Rider signs up to event on Wufoo
-- Donors pay via PayPal
+## How it works
+- Rider registration is hosted on Wufoo
+- Rider donations are done via PayPal
+- Data is pulled from Wufoo and PayPal to generate JSON file
+- Donation page uses JSON file to populate rider pages
 - Script is run to update JSON file on GitHub
 
 
