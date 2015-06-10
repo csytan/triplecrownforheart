@@ -27,6 +27,7 @@ $.getJSON('riders.json', function(riders) {
 function init(riders, donations) {
     $(window)
         .on('hashchange', function() {
+            $(window).scrollTop(0);
             if (location.hash == '#thanks') {
                 // Load thanks page
                 renderThanks();
