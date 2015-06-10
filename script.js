@@ -27,8 +27,11 @@ $.getJSON('riders.json', function(riders) {
 function init(riders, donations) {
     $(window)
         .on('hashchange', function() {
-            // Render rider page if hash exists
-            if (location.hash) {
+            if (location.hash == '#thanks') {
+                // Load thanks page
+                renderThanks();
+            } else if (location.hash) {
+                // Render rider page
                 var id = location.hash.slice(1);
                 var rider = _.find(riders, function(rider) {
                     return rider.id === id;
@@ -67,7 +70,11 @@ function renderRider(rider, donations) {
 }
 
 
-
+function renderThanks() {
+    var html = _.template(
+        $('.jstemplate-thanks').html());
+    $('.container').html(html);
+}
 
 
 
