@@ -1,37 +1,97 @@
 body {
-    font-family: 'Vollkorn', serif;
-    background: #FF7D66;
-    color: rgba(0,0,0,0.8);
+    font-family: 'Open Sans', sans-serif;
     font-size: 18px;
-    line-height: 1.5em;
+    font-weight: 300;
+    background: #CA442B;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+    padding: 0;
+    margin: 0;
+}
+
+h1, h2, h3 {
+    font-family: 'Vollkorn', serif;
 }
 
 h1 {
-    font-size: 40px;
-    color: rgba(0,0,0,.7);
-    line-height: 1.2;
-}
-        
-.container {
-    width: 80%;
-    max-width: 800px;
-    margin: 100px auto;
+    font-size: 35px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.35;
 }
 
+.container {
+    width: 85%;
+    max-width: 600px;
+    margin: 50px auto;
+}
+@media screen and (min-width: 600px) {
+    .container {
+        margin: 100px auto;
+    }
+}
+
+
+.index {
+    padding: 0 20px;
+}
+
+.riders {
+    margin-top: 20px;
+    color: rgba(255,255,255,.3);
+    font-size: 20px;
+    padding-left: 0;
+}
+.riders li {
+    margin: 15px 0;
+}
+.riders_link {
+    font-size: 25px;
+    text-decoration: none;
+    color: rgba(255,255,255,.6);
+    line-height: 1;
+}
+.riders_link:hover {
+    color: rgba(255,255,255,.8);
+}
+
+
 .deets {
-    font-family: 'Ovo';
     font-size: 22px;
-    line-height: 1.8em;
+    line-height: 2;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .deets a {
     text-decoration: none;
-    color: rgba(0,0,0,.6);
-    background: rgba(0,0,0,.1);
-    padding: 3px 5px;
-    border-radius: 2px;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.1);
+    padding: 0px 5px 3px;
+    border-radius: 3px;
+}
+.deets a:hover {
+    background: rgba(0, 0, 0, 0.2);
 }
 
-.deets a:hover {
-    background: rgba(0,0,0,.2);
+.donation_btn {
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 25px;
+    padding: 15px 20px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+    font-size: 18px;
+    font-family: inherit;
+    line-height: 1.2;
+    color: rgb(160, 38, 15);
+    box-shadow: 1px 1px 5px rgba(0,0,0,.2);
+    outline: 0;
+    border: none;
 }
+.donation_btn:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+
+
+
+

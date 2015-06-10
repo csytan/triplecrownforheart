@@ -31,9 +31,10 @@ python3 run.py
 ## How it works
 - Rider registration is hosted on Wufoo
 - Rider donations are done via PayPal
-- Data is pulled from Wufoo and PayPal to generate JSON file
-- Donation page uses JSON file to populate rider pages
-- Script is run to update JSON file on GitHub
+- Data is pulled from Wufoo and PayPal to generate JSON files
+- Donation site uses JSON file to populate rider pages
+- Script is run at set intervals to update JSON file
+- Updates are pushed to this GitHub repo
 
 
 ## Wufoo

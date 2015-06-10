@@ -12,7 +12,7 @@ def hash_id(secret):
     """
     Hashes IDs like emails and paypal transaction ids to keep them (somewhat) private
     """
-    salt = '1a2a3a4a5a6a7a8a9a'
+    salt = '1a2a3a4a5a6a7a8a9a'.encode('utf8')
     return hashlib.sha256(secret + salt).hexdigest()[:10]
 
 
@@ -40,14 +40,31 @@ def get_riders():
     """Returns a list of riders with their names and hashed emails as IDs"""
     riders = []
     for entry in wufoo_get_entries():
-        rider_name = (entry['Field5'].capitalize() + ' ' + 
-            entry['Field6'].capitalize())
+        first_name = entry['Field5'].capitalize().strip()
+        last_name = entry['Field6'].capitalize().strip()
         rider_email = entry['Field7'].strip().encode('utf8')
         riders.append({
             'id': hash_id(rider_email),
-            'name': rider_name
+            'first_name': first_name,
+            'last_name': last_name,
+            'name': first_name + ' ' + last_name,
         })
     return riders
+
+
+def update_riders():
+    with open('riders.json', 'r+') as f: 
+        riders = json.loads(f.read())
+        rider_ids = set(r['id'] for r in riders)
+        for rider in get_riders():
+            # Add new rider
+            if rider['id'] not in rider_ids:
+                riders.append(rider)
+        
+        # Write updated file
+        f.seek(0)
+        f.write(json.dumps(riders, indent=4))
+        f.truncate()
 
 
 def paypal_nvp(**kwargs):
@@ -94,12 +111,49 @@ def paypal_transactiondetails(txn_id):
     return dict(results)
 
 
-def get_donations():
+def get_donation_ids():
     transactions = paypal_transactionsearch()
     donation_ids = [
         txn['L_TRANSACTIONID'] for txn in transactions 
         if txn['L_TYPE'] == 'Donation']
     return donation_ids
+    
+    
+def update_donations():
+    with open('donations.json', 'r+') as f: 
+        donations = json.loads(f.read())
+        donation_ids = set(d['id'] for d in donations)
+        
+        # Check for new donations
+        for txn_id in get_donation_ids():
+            # Don't update existing donations (PayPal API is slow)
+            donation_id = hash_id(txn_id)
+            if donation_id in donation_ids:
+                continue
+            
+            # Fetch donation data
+            donation = paypal_transactiondetails(txn_id)
+            try:
+                custom = json.loads(donation['CUSTOM'])
+            except:
+                print('Error loading donation data:')
+                pp.pprint(donation)
+                continue
+            
+            # Update donations
+            donations.append({
+                'id': donation_id,
+                'to': custom['to'],
+                'from': custom['from'],
+                'amount': float(donation['AMT']),
+                'message': custom['message']
+            })
+        
+        # Write updated file
+        f.seek(0)
+        f.write(json.dumps(donations, indent=4))
+        f.truncate()
+
 
 
 if __name__ == '__main__':
@@ -107,4 +161,18 @@ if __name__ == '__main__':
     #pp.pprint(get_riders())
     #pp.pprint(paypal_transactionsearch())
     #pp.pprint(paypal_transactiondetails())
-    pp.pprint(get_donations())
+    #pp.pprint(get_donation_ids())
+    pp.pprint(paypal_transactiondetails(secrets.paypal_example_txn))
+    
+    #update_riders()
+    #update_donations()
+    
+        
+    
+    
+        
+
+
+
+
+
