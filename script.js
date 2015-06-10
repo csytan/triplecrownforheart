@@ -55,10 +55,14 @@ function renderMain(riders) {
 
 
 function renderRider(rider, donations) {
-    console.log(rider, donations)
+    // Filter donations
+    donations = _.filter(donations, function(donation) {
+        return donation.to == rider.id;
+    });
+    
     var html = _.template(
         $('.jstemplate-rider').html(), 
-        {rider: rider});
+        {rider: rider, donations: donations});
     $('.container').html(html);
 }
 

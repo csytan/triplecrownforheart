@@ -62,4 +62,3 @@ python3 run.py
 *Notes*: REST API requires OAuth 2 client authentication. Not ideal for server-less implementation.
 
 
-

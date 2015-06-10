@@ -86,7 +86,7 @@ def paypal_transactionsearch():
     https://developer.paypal.com/webapps/developer/docs/classic/api/merchant/TransactionSearch_API_Operation_NVP/
     """
     results = paypal_nvp(
-        METHOD='TransactionSearch', STARTDATE='2014-01-01T00:00:00Z')
+        METHOD='TransactionSearch', STARTDATE='2015-05-01T00:00:00Z')
     
     # Group attributes by transaction
     transactions = {}
@@ -127,26 +127,20 @@ def update_donations():
         # Check for new donations
         for txn_id in get_donation_ids():
             # Don't update existing donations (PayPal API is slow)
-            donation_id = hash_id(txn_id)
+            donation_id = hash_id(txn_id.encode('utf8'))
             if donation_id in donation_ids:
                 continue
             
             # Fetch donation data
             donation = paypal_transactiondetails(txn_id)
-            try:
-                custom = json.loads(donation['CUSTOM'])
-            except:
-                print('Error loading donation data:')
-                pp.pprint(donation)
-                continue
             
             # Update donations
             donations.append({
                 'id': donation_id,
-                'to': custom['to'],
-                'from': custom['from'],
+                'to': donation.get('L_NUMBER0', None),
+                'from': donation['FIRSTNAME'] + ' ' + donation['LASTNAME'],
                 'amount': float(donation['AMT']),
-                'message': custom['message']
+                'message': donation.get('CUSTOM', '')
             })
         
         # Write updated file
@@ -162,10 +156,10 @@ if __name__ == '__main__':
     #pp.pprint(paypal_transactionsearch())
     #pp.pprint(paypal_transactiondetails())
     #pp.pprint(get_donation_ids())
-    pp.pprint(paypal_transactiondetails(secrets.paypal_example_txn))
+    #pp.pprint(paypal_transactiondetails(secrets.paypal_example_txn))
     
-    #update_riders()
-    #update_donations()
+    update_riders()
+    update_donations()
     
         
     

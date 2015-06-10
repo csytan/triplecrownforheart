@@ -11,6 +11,7 @@ body {
 
 h1, h2, h3 {
     font-family: 'Vollkorn', serif;
+    margin: 0.5em 0;
 }
 
 h1 {
@@ -22,7 +23,7 @@ h1 {
 .container {
     width: 85%;
     max-width: 600px;
-    margin: 50px auto;
+    margin: 60px auto;
 }
 @media screen and (min-width: 600px) {
     .container {
@@ -34,49 +35,100 @@ h1 {
 .index {
     padding: 0 20px;
 }
-
-.riders {
+.index_mountains {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    fill: white;
+    margin-bottom: -6px;
+}
+.index_riders {
     margin-top: 20px;
     color: rgba(255,255,255,.3);
     font-size: 20px;
     padding-left: 0;
 }
-.riders li {
+.index_riders li {
     margin: 15px 0;
 }
-.riders_link {
+.index_rider {
     font-size: 25px;
     text-decoration: none;
     color: rgba(255,255,255,.6);
     line-height: 1;
 }
-.riders_link:hover {
+.index_rider:hover {
     color: rgba(255,255,255,.8);
 }
 
 
-.deets {
+
+
+.rider_home {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.rider_home svg {
+    fill: rgba(0,0,0,.2);
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+}
+.rider_home:hover svg {
+    fill: rgba(0,0,0,.5);
+}
+
+
+.rider_info {
     font-size: 22px;
     line-height: 2;
     text-shadow: 1px 1px rgba(0, 0, 0, 0.05);
+    margin-bottom: 10px;
 }
-
-.deets a {
+.rider_info_spacer {
+    display: block;
+    height: 1em;
+}
+.rider_info a {
     text-decoration: none;
     color: rgba(255, 255, 255, 0.8);
     background: rgba(0, 0, 0, 0.1);
     padding: 0px 5px 3px;
     border-radius: 3px;
 }
-.deets a:hover {
+.rider_info a:hover {
     background: rgba(0, 0, 0, 0.2);
 }
 
-.donation_btn {
+
+.rider_donate {
+    margin-top: 20px;
+}
+
+.rider_donateinput {
+    float: left;
+    width: 80%;
+    max-width: 300px;
+    margin-top: 15px;
+    margin-right: 20px;
+    border: none;
+    padding: 15px;
+    font-size: 17px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    background: rgba(255,255,255,0.8);
+}
+.rider_donateinput:focused {
+    background: white;
+}
+
+.rider_donatebtn {
     cursor: pointer;
     display: inline-block;
-    margin-top: 25px;
-    padding: 15px 20px;
+    width: 175px;
+    margin-top: 15px;
+    padding: 13px 20px;
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 4px;
     font-size: 18px;
@@ -87,11 +139,27 @@ h1 {
     outline: 0;
     border: none;
 }
-.donation_btn:hover {
+.rider_donatebtn:hover {
     background-color: rgba(255, 255, 255, 0.8);
 }
+.rider_donatebtn svg {
+    fill: rgb(160, 38, 15);
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    margin-bottom: -5px;
+    margin-right: 1px;
+}
 
+.rider_donateinfo {
+    color: rgba(0,0,0,.5);
+    margin-top: 15px;
+    font-size: 16px;
+}
 
+.rider_donation {
+    margin-bottom: 10px;
+}
 
 
 
