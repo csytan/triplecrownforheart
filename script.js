@@ -17,8 +17,8 @@
 // --------------------------------------------
 
 // Load JSON files
-$.getJSON('/riders.json', function(riders) {
-    $.getJSON('/donations.json', function(donations) {
+$.getJSON('riders.json', function(riders) {
+    $.getJSON('donations.json', function(donations) {
         init(riders, donations);
     });
 });
