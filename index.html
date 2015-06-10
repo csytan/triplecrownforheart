@@ -83,15 +83,18 @@
         <form class="rider_donate" 
             action="https://www.paypal.com/cgi-bin/webscr" method="post">
             <input type="hidden" name="cmd" value="_donations">
-            <input type="hidden" name="return" value="https://donate.triplecrownforheart.com?thanks=1">
+            <input type="hidden" name="return" 
+                value="https://csytan.github.io/triplecrownforheart/#thanks">
             <input type="hidden" name="rm" value="1">
-            <input type="hidden" name="cancel_return" value="http://donate.triplecrownforheart.com">
+            <input type="hidden" name="cancel_return" 
+                value="https://csytan.github.io/triplecrownforheart/#<%- rider.id %>">
             <input type="hidden" name="business" value="stephen@triplecrownforheart.com">
             <input type="hidden" name="item_name" value="Donation to the BC Children's Hospital Heart Unit">
             <input type="hidden" name="item_number" value="<%- rider.id %>">
             <input type="hidden" name="currency_code" value="CAD">            
             <input class="rider_donateinput" type="text" name="custom" 
-                placeholder="Message to <%- rider.first_name %>">
+                placeholder="Message to <%- rider.first_name %>"
+                maxlength="250">
             
             <button type="submit" class="rider_donatebtn">
                 <svg>
@@ -120,6 +123,23 @@
                 </div>
             <% }); %>
         <% } %>
+    </script>
+    
+    <script class="jstemplate-thanks" type="text/html">
+        <a href="" class="rider_home">
+            <svg>
+                <use xlink:href="#icon-arrow-left"></use>
+            </svg>
+        </a>
+        <div class="thanks">
+            <h1>Thanks for your donation!</h1>
+            <svg>
+                <use xlink:href="#icon-heart"></use>
+            </svg>
+            <div class="thanks_info">
+                Please wait a few minutes for your donation to show up on the site.
+            </div>
+        </div>
     </script>
     
     <script src="script.js"></script>
