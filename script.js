@@ -50,6 +50,20 @@ function init(riders, donations) {
 
 
 function renderMain(riders) {
+    // Sort by first name, then last name
+    riders.sort(function(a, b) {
+        if (a.last_name > b.last_name) {
+            return 1;
+        } else if (a.last_name < b.last_name) {
+            return -1;
+        } else if (a.first_name > b.first_name) {
+            return 1;
+        } else if (a.first_name < b.first_name) {
+            return -1;
+        }
+        return 0;
+    });
+    
     var html = _.template(
         $('.jstemplate-main').html(), 
         {riders: riders});
