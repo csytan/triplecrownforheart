@@ -170,11 +170,20 @@ h1 {
     text-align: center;
     margin-top: 90px;
 }
-.thanks svg {
+.thanks_heart {
     fill: rgb(155, 25, 0);
-    width: 80%;
+    height: 180px;
+    width: 180px;
     margin: auto;
+    animation: beat 1s ease-out;
+    animation-iteration-count: infinite;
 }
+@keyframes beat {
+    0% {transform: scale(1.05, 1.05);}
+    100% {transform: scale(1, 1);}
+}
+
+
 .thanks_info {
     font-size: 18px;
 }
