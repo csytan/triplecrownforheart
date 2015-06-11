@@ -4,6 +4,7 @@ import pprint
 import re
 import requests
 import subprocess
+import time
 import urllib
 
 import secrets
@@ -162,10 +163,11 @@ if __name__ == '__main__':
     #pp.pprint(get_donation_ids())
     #pp.pprint(paypal_transactiondetails(secrets.paypal_example_txn))
     
-    update_riders()
-    update_donations()
-    push_to_github()
-        
+    while True:
+        update_riders()
+        update_donations()
+        push_to_github()
+    time.sleep(5 * 60)
     
     
         
