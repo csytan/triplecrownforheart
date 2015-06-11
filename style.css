@@ -113,7 +113,7 @@ h1 {
     margin-top: 15px;
     margin-right: 20px;
     border: none;
-    padding: 14px;
+    padding: 14px 20px;
     font-size: 16px;
     font-family: inherit;
     border-radius: 3px;
@@ -128,7 +128,6 @@ h1 {
 .rider_donatebtn {
     cursor: pointer;
     display: inline-block;
-    width: 175px;
     margin-top: 15px;
     padding: 13px 20px;
     background-color: rgba(255, 255, 255, 0.7);
@@ -150,7 +149,8 @@ h1 {
     height: 25px;
     display: inline-block;
     margin-bottom: -5px;
-    margin-right: 1px;
+    margin-left: -3px;
+    margin-right: 2px;
 }
 
 .rider_donateinfo {

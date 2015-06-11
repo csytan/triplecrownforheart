@@ -149,6 +149,9 @@ def update_donations():
         f.truncate()
 
 
+def push_to_github():
+    pass
+
 
 if __name__ == '__main__':
     pp = pprint.PrettyPrinter(indent=4)
