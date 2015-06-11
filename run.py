@@ -64,7 +64,7 @@ def update_riders():
         
         # Write updated file
         f.seek(0)
-        f.write(json.dumps(riders, indent=4))
+        f.write(json.dumps(riders, indent=4, sort_keys=True))
         f.truncate()
 
 
@@ -146,7 +146,7 @@ def update_donations():
         
         # Write updated file
         f.seek(0)
-        f.write(json.dumps(donations, indent=4))
+        f.write(json.dumps(donations, indent=4, sort_keys=True))
         f.truncate()
 
 

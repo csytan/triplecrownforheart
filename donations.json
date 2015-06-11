@@ -1,16 +1,16 @@
 [
     {
-        "message": "",
-        "id": "bb88ca49e8",
         "amount": 50.0,
-        "to": "Donation",
-        "from": "Heather Caldwell"
+        "from": "Heather Caldwell",
+        "id": "bb88ca49e8",
+        "message": "",
+        "to": "Donation"
     },
     {
-        "message": "Test donation!",
-        "id": "b6238fbde3",
         "amount": 5.0,
-        "to": "8141ddd81d",
-        "from": "Dominik Szopa"
+        "from": "Dominik Szopa",
+        "id": "b6238fbde3",
+        "message": "Test donation!",
+        "to": "8141ddd81d"
     }
 ]
