@@ -3,6 +3,7 @@ import json
 import pprint
 import re
 import requests
+import subprocess
 import urllib
 
 import secrets
@@ -150,7 +151,7 @@ def update_donations():
 
 
 def push_to_github():
-    pass
+    subprocess.call("git commit -a -m 'autocommit'; git push", shell=True)
 
 
 if __name__ == '__main__':
@@ -163,7 +164,7 @@ if __name__ == '__main__':
     
     update_riders()
     update_donations()
-    
+    push_to_github()
         
     
     
