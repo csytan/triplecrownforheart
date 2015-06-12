@@ -61,10 +61,16 @@ def update_riders():
     with open('riders.json', 'r+') as f: 
         riders = json.loads(f.read())
         rider_ids = set(r['id'] for r in riders)
+        
+        # Add new riders
         for rider in get_riders():
-            # Add new rider
             if rider['id'] not in rider_ids:
                 riders.append(rider)
+                rider_ids.add(rider['id'])
+        
+        # Sort by last name, then first name
+        riders.sort(key=lambda r: r['last_name'])
+        riders.sort(key=lambda r: r['first_name'])
         
         # Write updated file
         f.seek(0)
@@ -165,8 +171,8 @@ if __name__ == '__main__':
     #pp.pprint(paypal_transactiondetails())
     #pp.pprint(get_donation_ids())
     #pp.pprint(paypal_transactiondetails(secrets.paypal_example_txn))
-    
     #exit()
+    
     while True:
         update_riders()
         update_donations()
