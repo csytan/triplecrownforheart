@@ -18,7 +18,7 @@ def hash_id(secret):
     return hashlib.sha256(secret + salt).hexdigest()[:10]
 
 
-def wufoo_get_entries():
+def wufoo_get_entries(pagestart=0):
     """
     Returns the list of entries for the Triple Crown for Heart registration form.
     
@@ -27,15 +27,18 @@ def wufoo_get_entries():
     # Build request arguments
     subdomain = 'triplecrownforheart'
     form_id = 'z1a4h2p0qbi57j'
-    url = ('https://{}.wufoo.com/api/v3/forms/{}/entries.json'
-        .format(subdomain, form_id))
+    url = ('https://{}.wufoo.com/api/v3/forms/{}/entries.json?pageStart={}&pageSize=10'
+        .format(subdomain, form_id, pagestart))
         
     # Get response
     response = requests.get(url, auth=(secrets.wufoo_api_key, 'footastic'))
     
     # Filter out cruft
     data = json.loads(response.text)
-    return data['Entries']
+    entries = data['Entries']
+    if len(entries) == 100:
+        entries += wufoo_get_entries(pagestart + 100)
+    return entries
 
 
 def get_riders():
@@ -163,11 +166,12 @@ if __name__ == '__main__':
     #pp.pprint(get_donation_ids())
     #pp.pprint(paypal_transactiondetails(secrets.paypal_example_txn))
     
+    #exit()
     while True:
         update_riders()
         update_donations()
         push_to_github()
-    time.sleep(5 * 60)
+        time.sleep(5 * 60)
     
     
         
