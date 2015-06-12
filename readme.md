@@ -17,9 +17,14 @@ Install dependencies
 pip3 install requests
 ```
 
-To run
+To run script
 ```
 python3 run.py
+```
+
+To run locally (http://localhost:8000/)
+```
+python -m SimpleHTTPServer
 ```
 
 
