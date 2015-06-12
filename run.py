@@ -27,7 +27,7 @@ def wufoo_get_entries(pagestart=0):
     # Build request arguments
     subdomain = 'triplecrownforheart'
     form_id = 'z1a4h2p0qbi57j'
-    url = ('https://{}.wufoo.com/api/v3/forms/{}/entries.json?pageStart={}&pageSize=10'
+    url = ('https://{}.wufoo.com/api/v3/forms/{}/entries.json?pageStart={}&pageSize=100'
         .format(subdomain, form_id, pagestart))
         
     # Get response
