@@ -53,11 +53,17 @@ def get_riders():
             'first_name': first_name,
             'last_name': last_name,
             'name': first_name + ' ' + last_name,
+            'email': rider_email
         })
     return riders
 
 
 def update_riders():
+    # Load email template
+    with open('welcome_email.txt', 'r') as f:
+        email_template = f.read()
+    
+    # Load riders file
     with open('riders.json', 'r+') as f: 
         riders = json.loads(f.read())
         rider_ids = set(r['id'] for r in riders)
@@ -65,8 +71,22 @@ def update_riders():
         # Add new riders
         for rider in get_riders():
             if rider['id'] not in rider_ids:
+                # Add new rider
                 riders.append(rider)
                 rider_ids.add(rider['id'])
+                
+                # Email rider
+                donation_link = ('https://csytan.github.io/triplecrownforheart' +
+                    '#' + rider['id'])
+                text = (email_template
+                    .replace('[DONATION_LINK]', donation_link))
+                send_email(
+                    to=rider['email'],
+                    subject='Triple Crown for Heart: Donation Page',
+                    text=text)
+                
+                # Remove rider email from JSON
+                del rider['email']
         
         # Sort by last name, then first name
         riders.sort(key=lambda r: r['last_name'])
@@ -164,6 +184,16 @@ def push_to_github():
     subprocess.call("git commit -a -m 'autocommit'; git push", shell=True)
 
 
+def send_email(to, subject, text):
+    return requests.post(
+        "https://api.mailgun.net/v3/mg.triplecrownforheart.ca/messages",
+        auth=("api", secrets.mailgun_api_key),
+        data={"from": "Triple Crown for Heart Donations <donate@mg.triplecrownforheart.ca>",
+              "to": [to],
+              "subject": subject,
+              "text": text})
+
+
 if __name__ == '__main__':
     pp = pprint.PrettyPrinter(indent=4)
     #pp.pprint(get_riders())
@@ -171,8 +201,12 @@ if __name__ == '__main__':
     #pp.pprint(paypal_transactiondetails())
     #pp.pprint(get_donation_ids())
     #pp.pprint(paypal_transactiondetails(secrets.paypal_example_txn))
-    #exit()
     
+    #response = send_email('csytan@gmail.com', 'hi chris', 'testing')
+    #print(dir(response))
+    #print(response.text)
+    
+    #exit()
     while True:
         update_riders()
         update_donations()
