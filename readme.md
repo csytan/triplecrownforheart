@@ -29,6 +29,10 @@ python -m SimpleHTTPServer
 ```
 
 
+## Ideas
+- Very cool contrib page: http://www.arduino.cc/en/Main/Donate
+
+
 ## Media
 - https://www.flickr.com/photos/94324846@N05/sets/72157634977479181/
 - http://triplecrownforheart.ca/gallery/

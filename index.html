@@ -14,15 +14,12 @@
         <symbol id="icon-arrow-left" viewBox="0 0 512 512">
             <path d="m475 256l0 37c0 10-3 18-9 25c-6 8-14 11-24 11l-201 0l84 84c7 7 10 16 10 26c0 10-3 19-10 26l-22 21c-7 7-15 11-26 11c-9 0-18-4-26-11l-186-186c-7-7-10-16-10-26c0-10 3-18 10-26l186-185c8-8 16-11 26-11c10 0 19 3 26 11l22 21c7 7 10 16 10 26c0 10-3 18-10 26l-84 83l201 0c10 0 18 4 24 11c6 7 9 16 9 26z"/>
         </symbol>
-      
         <symbol id="icon-home" viewBox="0 0 512 512">
             <path d="m480 263c6 6 8 10 6 14c-2 4-6 6-14 6c0 0-43 0-43 0c0 0 0 158 0 158c0 5 0 9 0 11c-1 2-2 5-4 7c-3 2-7 3-12 3c0 0-105 0-105 0c0 0 0-159 0-159c0 0-104 0-104 0c0 0 0 159 0 159c0 0-99 0-99 0c-10 0-16-2-18-5c-3-4-4-9-4-16c0 0 0-158 0-158c0 0-43 0-43 0c-7 0-12-2-14-6c-1-4 0-8 6-14c0 0 205-206 205-206c5-5 12-8 19-8c8 0 14 3 20 8c0 0 204 206 204 206"/>
         </symbol>
-      
         <symbol id="icon-heart" viewBox="0 0 512 512">
             <path d="m440 105c24 22 36 49 36 80c0 32-12 59-36 81c0 0-184 169-184 169c0 0-184-169-184-169c-24-22-36-49-36-81c0-31 12-58 36-80c21-19 47-29 77-29c30 0 56 10 78 29c0 0 29 27 29 27c0 0 30-27 30-27c21-19 46-29 76-29c31 0 56 10 78 29"/>
         </symbol>
-      
         <symbol id="icon-mountains" viewBox="0 0 512 512">
             <path d="m488 400l0 0l-170-295l0 0c-4-8-12-13-21-13c-9 0-17 6-21 14l-113 196l-28-48l0 0c-2-4-6-7-11-7c-5 0-9 3-11 7l-81 140l0 0l0 1l-8 13c-1 2-2 3-2 5c0 4 4 7 8 7c0 0 1 0 2-1l0 1l445 0l0 0c7-1 13-7 13-14c0-2-1-4-2-6z"/>
         </symbol>        
@@ -91,10 +88,14 @@
             <input type="hidden" name="business" value="stephen@triplecrownforheart.com">
             <input type="hidden" name="item_name" value="Donation to the BC Children's Hospital Heart Unit">
             <input type="hidden" name="item_number" value="<%- rider.id %>">
-            <input type="hidden" name="currency_code" value="CAD">            
-            <input class="rider_donateinput" type="text" name="custom" 
+            <input type="hidden" name="currency_code" value="CAD">
+            
+            <input class="js-custom" type="hidden" name="custom">
+            <input class="js-name rider_input" type="text"
+                placeholder="Your name (optional)" maxlength="50">
+            <input class="js-message rider_input" type="text"
                 placeholder="Message to <%- rider.first_name %>"
-                maxlength="250">
+                maxlength="140">
             
             <button type="submit" class="rider_donatebtn">
                 <svg>
@@ -104,7 +105,7 @@
             </button>
             
             <div class="rider_donateinfo">
-                A tax receipt will be sent to your PayPal email following the event.
+                Tax receipts will be sent for donations &gt; $20 following the event.
             </div>
         </form>
         

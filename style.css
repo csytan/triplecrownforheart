@@ -106,14 +106,12 @@ h1 {
     margin-top: 20px;
 }
 
-.rider_donateinput {
-    float: left;
+.rider_input {
     width: 80%;
     max-width: 300px;
-    margin-top: 15px;
-    margin-right: 20px;
+    margin-top: 10px;
     border: none;
-    padding: 14px 20px;
+    padding: 1em;
     font-size: 16px;
     font-family: inherit;
     border-radius: 3px;
@@ -121,14 +119,15 @@ h1 {
     background: rgba(255,255,255,0.8);
     outline: none;
 }
-.rider_donateinput:focus {
+.rider_input:focus {
     background: white;
 }
 
 .rider_donatebtn {
     cursor: pointer;
-    display: inline-block;
-    margin-top: 15px;
+    display: block;
+    width: 180px;
+    margin-top: 10px;
     padding: 13px 20px;
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 4px;

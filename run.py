@@ -60,7 +60,7 @@ def get_riders():
 
 def update_riders():
     # Load email template
-    with open('welcome_email.txt', 'r') as f:
+    with open('email_welcome.txt', 'r') as f:
         email_template = f.read()
     
     # Load riders file
@@ -151,6 +151,11 @@ def get_donation_ids():
     
     
 def update_donations():
+    # Load email template
+    with open('email_donor.txt', 'r') as f:
+        email_template = f.read()
+        
+    # Update donations file
     with open('donations.json', 'r+') as f: 
         donations = json.loads(f.read())
         donation_ids = set(d['id'] for d in donations)
@@ -164,15 +169,29 @@ def update_donations():
             
             # Fetch donation data
             donation = paypal_transactiondetails(txn_id)
+            to = donation.get('L_NUMBER0', None)
+            
+            # Load custom field
+            custom = donation.get('CUSTOM', '{}')
+            try:
+                custom = json.loads(custom)
+            except:
+                custom = {}
             
             # Update donations
             donations.append({
                 'id': donation_id,
-                'to': donation.get('L_NUMBER0', None),
-                'from': donation['FIRSTNAME'] + ' ' + donation['LASTNAME'],
+                'to': to,
+                'from': custom.get('name') or 'Anonymous',
                 'amount': float(donation['AMT']),
-                'message': donation.get('CUSTOM', '')
+                'message': custom.get('message')
             })
+            
+            # Send donor email
+            send_email(
+                to=rider['email'],
+                subject='Triple Crown for Heart: Donation',
+                text=email_template)
         
         # Write updated file
         f.seek(0)
@@ -185,7 +204,9 @@ def push_to_github():
 
 
 def send_email(to, subject, text):
-    return requests.post(
+    print('Sending email to '.format(to))
+    return
+    requests.post(
         "https://api.mailgun.net/v3/mg.triplecrownforheart.ca/messages",
         auth=("api", secrets.mailgun_api_key),
         data={"from": "Triple Crown for Heart Donations <donate@mg.triplecrownforheart.ca>",
@@ -203,8 +224,6 @@ if __name__ == '__main__':
     #pp.pprint(paypal_transactiondetails(secrets.paypal_example_txn))
     
     #response = send_email('csytan@gmail.com', 'hi chris', 'testing')
-    #print(dir(response))
-    #print(response.text)
     
     #exit()
     while True:

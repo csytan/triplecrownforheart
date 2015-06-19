@@ -67,7 +67,28 @@ function renderRider(rider, donations) {
     var html = _.template(
         $('.jstemplate-rider').html(), 
         {rider: rider, donations: donations});
-    $('.container').html(html);
+    
+    var $container = $('.container').html(html);
+    
+    // Update custom field with message  
+    var $custom = $container.find('.js-custom');  
+    var $name = $container
+        .find('.js-name')
+        .keyup(updateCustom);
+    var $message = $container
+        .find('.js-message')
+        .keyup(updateCustom);
+    
+    function updateCustom() {
+        var data = JSON.stringify({
+            'name': $name.val() || 'Anonymous',
+            'message': $message.val()
+        });
+        $custom.val(data);
+    }
+    
+    // Initialize custom field
+    updateCustom();
 }
 
 
