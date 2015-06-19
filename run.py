@@ -184,7 +184,7 @@ def update_donations():
                 'to': to,
                 'from': custom.get('name') or 'Anonymous',
                 'amount': float(donation['AMT']),
-                'message': custom.get('message')
+                'message': custom.get('message', '')
             })
             
             # Send donor email
@@ -205,14 +205,15 @@ def push_to_github():
 
 def send_email(to, subject, text):
     print('Sending email to '.format(to))
-    return
     requests.post(
         "https://api.mailgun.net/v3/mg.triplecrownforheart.ca/messages",
         auth=("api", secrets.mailgun_api_key),
-        data={"from": "Triple Crown for Heart Donations <donate@mg.triplecrownforheart.ca>",
-              "to": [to],
-              "subject": subject,
-              "text": text})
+        data={
+            "from": "Triple Crown for Heart Donations <donate@mg.triplecrownforheart.ca>",
+            "to": [to],
+            "subject": subject,
+            "text": text
+        })
 
 
 if __name__ == '__main__':
