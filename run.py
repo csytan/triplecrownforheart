@@ -14,8 +14,8 @@ def hash_id(secret):
     """
     Hashes IDs like emails and paypal transaction ids to keep them (somewhat) private
     """
-    salt = '1a2a3a4a5a6a7a8a9a'.encode('utf8')
-    return hashlib.sha256(secret + salt).hexdigest()[:10]
+    text = ('1a2a3a4a5a6a7a8a9a' + secret).encode('utf8')
+    return hashlib.sha256(text).hexdigest()[:10]
 
 
 def wufoo_get_entries(pagestart=0):
@@ -47,7 +47,7 @@ def get_riders():
     for entry in wufoo_get_entries():
         first_name = entry['Field5'].capitalize().strip()
         last_name = entry['Field6'].capitalize().strip()
-        rider_email = entry['Field7'].strip().encode('utf8')
+        rider_email = entry['Field7'].strip()
         riders.append({
             'id': hash_id(rider_email),
             'first_name': first_name,
@@ -165,7 +165,7 @@ def update_donations():
         # Check for new donations
         for txn_id in get_donation_ids():
             # Don't update existing donations (PayPal API is slow)
-            donation_id = hash_id(txn_id.encode('utf8'))
+            donation_id = hash_id(txn_id)
             if donation_id in donation_ids:
                 continue
             
@@ -216,10 +216,7 @@ def push_to_github():
 
 
 def send_email(to, subject, text):
-    print('Sending email to '.format(to))
-    if b'csytan@gmail.com' != to:
-        return
-    print('sending')
+    print('Sending email to: ' + to)
     return requests.post(
         "https://api.mailgun.net/v3/mg.triplecrownforheart.ca/messages",
         auth=("api", secrets.mailgun_api_key),
@@ -258,7 +255,7 @@ if __name__ == '__main__':
         print('Updating donations')
         update_donations()
         print('Pushing to github')
-        #push_to_github()
+        push_to_github()
         time.sleep(5 * 60)
     
     
