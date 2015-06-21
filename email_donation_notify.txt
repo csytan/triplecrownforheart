@@ -1,0 +1,4 @@
+A donation has been made on your behalf! 
+
+Check out your page to see who:
+[DONATION_LINK]

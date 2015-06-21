@@ -75,15 +75,11 @@ def update_riders():
                 riders.append(rider)
                 rider_ids.add(rider['id'])
                 
-                # Email rider
-                donation_link = ('https://csytan.github.io/triplecrownforheart' +
-                    '#' + rider['id'])
-                text = (email_template
-                    .replace('[DONATION_LINK]', donation_link))
-                send_email(
-                    to=rider['email'],
+                # Send welcome email to rider
+                send_email_to_rider(
+                    rider=rider,
                     subject='Triple Crown for Heart: Donation Page',
-                    text=text)
+                    template=email_template)
                 
                 # Remove rider email from JSON
                 del rider['email']
@@ -151,14 +147,20 @@ def get_donation_ids():
     
     
 def update_donations():
-    # Load email template
+    # Load email templates
     with open('email_donor.txt', 'r') as f:
-        email_template = f.read()
+        email_donor = f.read()
+        
+    with open('email_donation_notify.txt', 'r') as f:
+        email_donation_notify = f.read()
         
     # Update donations file
     with open('donations.json', 'r+') as f: 
         donations = json.loads(f.read())
         donation_ids = set(d['id'] for d in donations)
+        
+        # Load rider ids (to get emails)
+        riders = {r['id']: r for r in get_riders()}
         
         # Check for new donations
         for txn_id in get_donation_ids():
@@ -169,7 +171,7 @@ def update_donations():
             
             # Fetch donation data
             donation = paypal_transactiondetails(txn_id)
-            to = donation.get('L_NUMBER0', None)
+            rider_id = donation.get('L_NUMBER0', None)
             
             # Load custom field
             custom = donation.get('CUSTOM', '{}')
@@ -177,21 +179,31 @@ def update_donations():
                 custom = json.loads(custom)
             except:
                 custom = {}
+            donor = custom.get('name') or 'Anonymous'
+            message = custom.get('message', '')
             
             # Update donations
             donations.append({
                 'id': donation_id,
-                'to': to,
-                'from': custom.get('name') or 'Anonymous',
+                'to': rider_id,
+                'from': donor,
                 'amount': float(donation['AMT']),
-                'message': custom.get('message', '')
+                'message': message
             })
             
-            # Send donor email
+            # Send email to donor
             send_email(
-                to=rider['email'],
+                to=donation['EMAIL'],
                 subject='Triple Crown for Heart: Donation',
-                text=email_template)
+                text=email_donor)
+                
+            # Send email to rider
+            rider = riders.get(rider_id)
+            if rider:
+                send_email_to_rider(
+                    rider=rider,
+                    subject='Donation made by: ' + donor,
+                    template=email_donation_notify)
         
         # Write updated file
         f.seek(0)
@@ -205,7 +217,10 @@ def push_to_github():
 
 def send_email(to, subject, text):
     print('Sending email to '.format(to))
-    requests.post(
+    if b'csytan@gmail.com' != to:
+        return
+    print('sending')
+    return requests.post(
         "https://api.mailgun.net/v3/mg.triplecrownforheart.ca/messages",
         auth=("api", secrets.mailgun_api_key),
         data={
@@ -214,6 +229,16 @@ def send_email(to, subject, text):
             "subject": subject,
             "text": text
         })
+
+
+def send_email_to_rider(rider, subject, template):
+    donation_link = 'https://csytan.github.io/triplecrownforheart#' + rider['id']
+    text = (template
+        .replace('[DONATION_LINK]', donation_link))
+    return send_email(
+        to=rider['email'],
+        subject=subject,
+        text=text)
 
 
 if __name__ == '__main__':
@@ -233,7 +258,7 @@ if __name__ == '__main__':
         print('Updating donations')
         update_donations()
         print('Pushing to github')
-        push_to_github()
+        #push_to_github()
         time.sleep(5 * 60)
     
     

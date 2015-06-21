@@ -36,6 +36,12 @@
         "name": "Anthony Brown"
     },
     {
+        "first_name": "Anthony",
+        "id": "3be4304298",
+        "last_name": "Chang",
+        "name": "Anthony Chang"
+    },
+    {
         "first_name": "Ben",
         "id": "a82816409b",
         "last_name": "Shad",
@@ -72,6 +78,12 @@
         "name": "Chris Chin"
     },
     {
+        "first_name": "Chris",
+        "id": "56abffc2d8",
+        "last_name": "Tan",
+        "name": "Chris Tan"
+    },
+    {
         "first_name": "Clare",
         "id": "bf46b8c160",
         "last_name": "Wells",
@@ -88,6 +100,12 @@
         "id": "a88cb225d0",
         "last_name": "Wessell",
         "name": "Daniel Wessell"
+    },
+    {
+        "first_name": "David",
+        "id": "d640b85630",
+        "last_name": "Devisser",
+        "name": "David Devisser"
     },
     {
         "first_name": "David",
@@ -136,6 +154,12 @@
         "id": "f0557445ca",
         "last_name": "Sauter",
         "name": "George Sauter"
+    },
+    {
+        "first_name": "Gordon",
+        "id": "a5044222a1",
+        "last_name": "Chang",
+        "name": "Gordon Chang"
     },
     {
         "first_name": "Grigory",
@@ -310,6 +334,12 @@
         "id": "fe5b246cd9",
         "last_name": "Jansen",
         "name": "Stephanie Jansen"
+    },
+    {
+        "first_name": "Stuart",
+        "id": "53c5c3fde4",
+        "last_name": "Lew",
+        "name": "Stuart Lew"
     },
     {
         "first_name": "Tom",

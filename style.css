@@ -1,3 +1,5 @@
+* { box-sizing: border-box; }
+
 body {
     font-family: 'Open Sans', sans-serif;
     font-size: 18px;
@@ -62,18 +64,16 @@ h1 {
 }
 
 
-
-
 .rider_home {
     position: absolute;
     top: 0;
     left: 0;
+    padding: 10px;
 }
 .rider_home svg {
     fill: rgba(0,0,0,.2);
     width: 30px;
     height: 30px;
-    padding: 10px;
 }
 .rider_home:hover svg {
     fill: rgba(0,0,0,.5);
@@ -107,15 +107,15 @@ h1 {
 }
 
 .rider_input {
-    width: 80%;
-    max-width: 300px;
-    margin-top: 10px;
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    margin: 15px 0;
     border: none;
     padding: 1em;
     font-size: 16px;
     font-family: inherit;
     border-radius: 3px;
-    margin-bottom: 10px;
     background: rgba(255,255,255,0.8);
     outline: none;
 }
