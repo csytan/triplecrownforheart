@@ -19,5 +19,12 @@
         "id": "940edcd121",
         "message": "Testing!",
         "to": "56abffc2d8"
+    },
+    {
+        "amount": 300.0,
+        "from": "Richard Wong",
+        "id": "7403e87041",
+        "message": "",
+        "to": "af01b05843"
     }
 ]
