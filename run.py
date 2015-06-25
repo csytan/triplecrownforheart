@@ -249,14 +249,12 @@ if __name__ == '__main__':
     #response = send_email('csytan@gmail.com', 'hi chris', 'testing')
     
     #exit()
-    while True:
-        print('Updating riders')
-        update_riders()
-        print('Updating donations')
-        update_donations()
-        print('Pushing to github')
-        push_to_github()
-        time.sleep(5 * 60)
+    print('Updating riders')
+    update_riders()
+    print('Updating donations')
+    update_donations()
+    print('Pushing to github')
+    push_to_github()
     
     
         
