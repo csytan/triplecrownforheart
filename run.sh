@@ -8,5 +8,5 @@ do
     git add riders.json
     git commit -m 'auto update'
     git push
-    sleep 5
+    sleep 300
 done
