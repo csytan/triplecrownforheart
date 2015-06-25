@@ -89,5 +89,12 @@
         "id": "a148245e55",
         "message": "rollin, rollin, rollin down the mountain",
         "to": "7bcfd740e5"
+    },
+    {
+        "amount": 5.0,
+        "from": "Dominik",
+        "id": "002d1615a3",
+        "message": "Good luck dude!",
+        "to": "71c2f3f571"
     }
 ]
