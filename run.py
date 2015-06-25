@@ -211,10 +211,6 @@ def update_donations():
         f.truncate()
 
 
-def push_to_github():
-    subprocess.call("git commit -a -m 'autocommit'; git push", shell=True)
-
-
 def send_email(to, subject, text):
     print('Sending email to: ' + to)
     return requests.post(
@@ -253,13 +249,6 @@ if __name__ == '__main__':
     update_riders()
     print('Updating donations')
     update_donations()
-    print('Pushing to github')
-    push_to_github()
-    
-    
-        
-
-
 
 
 
