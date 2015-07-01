@@ -25,6 +25,16 @@ $.getJSON('riders.json', function(riders) {
 
 
 function init(riders, donations) {
+    // Add total raised for each rider
+    var totals = {};
+    _.each(donations, function(donation) {
+        totals[donation.to] = (totals[donation.to] || 0) + donation.amount;
+    });
+    _.each(riders, function(rider) {
+        rider.raised = totals[rider.id] || 0;
+    });
+    
+    // Page events
     $(window)
         .on('hashchange', function() {
             $(window).scrollTop(0);
@@ -43,28 +53,25 @@ function init(riders, donations) {
                 }
             } else {
                 // Load main page
-                renderMain(riders, donations);
+                renderMain(riders);
             }
         })
         .trigger('hashchange');    
 }
 
 
-function riderTotals(donations) {
-    var totals = {};
-    _.each(donations, function(donation) {
-        totals[donation.to] = (totals[donation.to] || 0) + donation.amount;
-    });
-    return totals;
-}
-
-
-function renderMain(riders, donations) {
+function renderMain(riders) {
+    var leaders = _.sortBy(
+        riders,
+        function(rider) { return rider.raised; });
+    leaders.reverse();
+    leaders.splice(5);
+    
     var html = _.template(
         $('.jstemplate-main').html(), 
         {
-            riders: riders,
-            totals: riderTotals(donations)
+            leaders: leaders,
+            riders: riders
         });
     $('.container').html(html);
 }
@@ -80,8 +87,7 @@ function renderRider(rider, donations) {
         $('.jstemplate-rider').html(), 
         {
             rider: rider, 
-            donations: donations,
-            totals: riderTotals(donations)
+            donations: donations
         });
     
     var $container = $('.container').html(html);

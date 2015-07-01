@@ -33,22 +33,31 @@
                 <svg class="index_mountains">
                     <use xlink:href="#icon-mountains"></use>
                 </svg>
-                Triple Crown for Heart - Riders
+                Triple Crown for Heart Donations
             </h1>
             
-            <div class="index_nav" style="display:none">
-                <a href="#" class="index_nav-selected">Riders</a>
-                <a href="#donors">Donors</a>
-            </div>
+            <h2>Top 5 Fundraisers</h2>
+
+            <ol class="index_riders">
+                <% _.each(leaders, function(rider) { %>
+                    <li>
+                        <a href="#<%- rider.id %>" class="index_rider">
+                            <%- rider.name %>
+                            <% if (rider.raised) { %> 
+                                ($<%- rider.raised %>)
+                            <% } %>
+                        </a>
+                    </li>
+                <% }); %>
+            </ol>
+            
+            <h2>Riders (A-Z)</h2>
             
             <ol class="index_riders">
                 <% _.each(riders, function(rider) { %>
                     <li>
                         <a href="#<%- rider.id %>" class="index_rider">
                             <%- rider.name %>
-                            <% if (totals[rider.id]) { %> 
-                                ($<%- totals[rider.id] %>)
-                            <% } %>                           
                         </a>
                     </li>
                 <% }); %>
@@ -71,8 +80,8 @@
         </h1>
         
         <div class="rider_info">
-            <% if (totals[rider.id]) { %> 
-                Has raised <span class="rider_raised">$<%- totals[rider.id] %></span> for the
+            <% if (rider.raised) { %> 
+                Has raised <span class="rider_raised">$<%- rider.raised %></span> for the
             <% } else { %>
                 Is participating in the 
             <% } %>

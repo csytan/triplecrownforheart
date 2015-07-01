@@ -13,13 +13,19 @@ body {
 
 h1, h2, h3 {
     font-family: 'Vollkorn', serif;
-    margin: 0.5em 0;
 }
 
 h1 {
     font-size: 35px;
     color: rgba(255, 255, 255, 0.9);
     line-height: 1.35;
+    margin: 0.5em 0;
+}
+
+h2 {
+    font-size: 27px;
+    margin: .8em 0;
+    color: rgba(255, 255, 255, 0.75);
 }
 
 .container {
@@ -45,7 +51,7 @@ h1 {
     margin-bottom: -6px;
 }
 .index_riders {
-    margin-top: 20px;
+    margin: 20px 0 35px;
     color: rgba(255,255,255,.3);
     font-size: 20px;
     padding-left: 0;
