@@ -100,7 +100,12 @@ h1 {
 .rider_info a:hover {
     background: rgba(0, 0, 0, 0.2);
 }
-
+.rider_raised {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    font-family: 'Vollkorn', serif;
+}
 
 .rider_donate {
     margin-top: 20px;

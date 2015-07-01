@@ -225,7 +225,7 @@ def send_email(to, subject, text):
 
 
 def send_email_to_rider(rider, subject, template):
-    donation_link = 'https://csytan.github.io/triplecrownforheart#' + rider['id']
+    donation_link = 'http://donate.triplecrownforheart.ca/#' + rider['id']
     text = (template
         .replace('[DONATION_LINK]', donation_link))
     return send_email(

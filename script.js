@@ -43,17 +43,29 @@ function init(riders, donations) {
                 }
             } else {
                 // Load main page
-                renderMain(riders);
+                renderMain(riders, donations);
             }
         })
         .trigger('hashchange');    
 }
 
 
-function renderMain(riders) {
+function riderTotals(donations) {
+    var totals = {};
+    _.each(donations, function(donation) {
+        totals[donation.to] = (totals[donation.to] || 0) + donation.amount;
+    });
+    return totals;
+}
+
+
+function renderMain(riders, donations) {
     var html = _.template(
         $('.jstemplate-main').html(), 
-        {riders: riders});
+        {
+            riders: riders,
+            totals: riderTotals(donations)
+        });
     $('.container').html(html);
 }
 
@@ -66,7 +78,11 @@ function renderRider(rider, donations) {
     
     var html = _.template(
         $('.jstemplate-rider').html(), 
-        {rider: rider, donations: donations});
+        {
+            rider: rider, 
+            donations: donations,
+            totals: riderTotals(donations)
+        });
     
     var $container = $('.container').html(html);
     

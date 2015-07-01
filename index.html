@@ -35,11 +35,20 @@
                 </svg>
                 Triple Crown for Heart - Riders
             </h1>
+            
+            <div class="index_nav" style="display:none">
+                <a href="#" class="index_nav-selected">Riders</a>
+                <a href="#donors">Donors</a>
+            </div>
+            
             <ol class="index_riders">
                 <% _.each(riders, function(rider) { %>
                     <li>
                         <a href="#<%- rider.id %>" class="index_rider">
                             <%- rider.name %>
+                            <% if (totals[rider.id]) { %> 
+                                ($<%- totals[rider.id] %>)
+                            <% } %>                           
                         </a>
                     </li>
                 <% }); %>
@@ -58,11 +67,16 @@
             <svg class="index_mountains">
                 <use xlink:href="#icon-mountains"></use>
             </svg>
-            <%- rider.name %>
+            <%- rider.name %>            
         </h1>
         
         <div class="rider_info">
-            Is participating in the 
+            <% if (totals[rider.id]) { %> 
+                Has raised <span class="rider_raised">$<%- totals[rider.id] %></span> for the
+            <% } else { %>
+                Is participating in the 
+            <% } %>
+            
             <a href="http://triplecrownforheart.ca" target="_blank">Triple Crown for Heart</a>;
             
             a charity bike event encompassing three mountains:
@@ -81,10 +95,10 @@
             action="https://www.paypal.com/cgi-bin/webscr" method="post">
             <input type="hidden" name="cmd" value="_donations">
             <input type="hidden" name="return" 
-                value="https://csytan.github.io/triplecrownforheart/#thanks">
+                value="http://donate.triplecrownforheart.ca/#thanks">
             <input type="hidden" name="rm" value="1">
             <input type="hidden" name="cancel_return" 
-                value="https://csytan.github.io/triplecrownforheart/#<%- rider.id %>">
+                value="http://donate.triplecrownforheart.ca/#<%- rider.id %>">
             <input type="hidden" name="business" value="stephen@triplecrownforheart.com">
             <input type="hidden" name="item_name" value="Donation to the BC Children's Hospital Heart Unit">
             <input type="hidden" name="item_number" value="<%- rider.id %>">
