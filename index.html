@@ -137,13 +137,11 @@
             <br>
             <h2>Donors</h2>
             <% _.each(donations, function(donation) { %>
-                <div class="rider_donation">
-                    <div class="rider_donationname">
-                        <%- donation.from %> ($<%- donation.amount %>)
-                    </div>
-                    <div class="rider_donationmessage">
-                        <%- donation.message %>
-                    </div>
+                <h3>
+                    <%- donation.from %> ($<%- donation.amount %>)
+                </h3>
+                <div class="rider_donormsg">
+                    <%- donation.message %>
                 </div>
             <% }); %>
         <% } %>
