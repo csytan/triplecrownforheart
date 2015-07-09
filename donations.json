@@ -341,5 +341,12 @@
         "id": "2a42c751e4",
         "message": "Good luck!",
         "to": "b4657699e1"
+    },
+    {
+        "amount": 25.0,
+        "from": "Frances E.",
+        "id": "06bf22ccaa",
+        "message": "Have fun!",
+        "to": "9aa393a95c"
     }
 ]
