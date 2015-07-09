@@ -315,17 +315,17 @@
         "to": "9aa393a95c"
     },
     {
-        "amount": 50.0,
-        "from": "Elsie Bulva",
-        "id": "952794900a",
-        "message": "Have a good ride and what a sweetie Avery is. I to hope she does well in the future . amazing how far she has come already. ",
-        "to": "9aa393a95c"
-    },
-    {
         "amount": 25.0,
         "from": "Mark B.",
         "id": "6cb8edbc21",
         "message": "",
+        "to": "9aa393a95c"
+    },
+    {
+        "amount": 50.0,
+        "from": "Elsie Bulva",
+        "id": "952794900a",
+        "message": "Have a good ride and what a sweetie Avery is. I to hope she does well in the future . amazing how far she has come already. ",
         "to": "9aa393a95c"
     }
 ]
