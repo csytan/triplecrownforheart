@@ -348,5 +348,12 @@
         "id": "06bf22ccaa",
         "message": "Have fun!",
         "to": "9aa393a95c"
+    },
+    {
+        "amount": 50.0,
+        "from": "Lido Crema",
+        "id": "5830b7fa89",
+        "message": "",
+        "to": "9aa393a95c"
     }
 ]
