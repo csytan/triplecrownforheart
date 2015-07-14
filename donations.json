@@ -637,17 +637,17 @@
         "to": "aea3467001"
     },
     {
-        "amount": 100.0,
-        "from": "Carmen",
-        "id": "6fb812300c",
-        "message": "Good luck Em! We believe in you <3",
-        "to": "10b84f827d"
-    },
-    {
         "amount": 50.0,
         "from": "Josh, Kyla, Jet & Nash Ternent (Browne)",
         "id": "c5956cff07",
         "message": "Way to go Dr. Gandhi!",
         "to": "aea3467001"
+    },
+    {
+        "amount": 100.0,
+        "from": "Carmen",
+        "id": "6fb812300c",
+        "message": "Good luck Em! We believe in you <3",
+        "to": "10b84f827d"
     }
 ]
