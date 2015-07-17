@@ -943,5 +943,12 @@
         "id": "eec7ceff67",
         "message": "Good Luck !",
         "to": "2100ff3612"
+    },
+    {
+        "amount": 100.0,
+        "from": "Kanto Living",
+        "id": "078e98caf6",
+        "message": "Don't forget you've got 30 lbs on me!",
+        "to": "bbe6cf6289"
     }
 ]
