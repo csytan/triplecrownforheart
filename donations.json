@@ -1020,5 +1020,19 @@
         "id": "fdd318d6e5",
         "message": "Make sure to shave them legs",
         "to": "b90deddf43"
+    },
+    {
+        "amount": 20.0,
+        "from": "Phil Cho",
+        "id": "ccc13d9bb6",
+        "message": "I did this ride on my own years ago.  It'll be an amazing ride.  Good luck!",
+        "to": "10b84f827d"
+    },
+    {
+        "amount": 50.0,
+        "from": "Glo and Chase",
+        "id": "21020e4369",
+        "message": "Go Em Go!!",
+        "to": "10b84f827d"
     }
 ]
