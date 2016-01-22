@@ -25,7 +25,7 @@ python3 run.py
 
 To run locally (http://localhost:8000/)
 ```
-python -m SimpleHTTPServer
+python3 -m http.server
 ```
 
 

@@ -44,6 +44,19 @@ h3 {
     }
 }
 
+.footer {
+    text-align: center;
+    margin: 50px auto;
+}
+.footer_link {
+    color: rgba(255,255,255,.7);
+    font-size: 18px;
+    text-decoration: none;
+}
+.footer_link:hover {
+    color: white;
+}
+
 
 .index {
     padding: 0 20px;
